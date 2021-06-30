@@ -1,0 +1,67 @@
+﻿@using Portfolio.Common
+@{ this.ViewData["Title"] = "Home Page"; }
+
+<section id="home" class="d-flex align-items-center">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9 text-center">
+                <h1><span class="typed" data-typed-items="Hello ! I'm  I'm a talented developer based in Bulgaria"></span></h1>
+
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a asp-page="/About" class="btn-get-started">About me</a>
+        </div>
+        <div class="links">
+            <a href="" target="_blank"><i class="bx bxl-facebook" style="font-size: 1.5em;"></i></a>
+            <a href="" target="_blank"><i class="bx bxl-github" style="font-size: 1.5em;"></i></a>
+            <a href="" target="_blank"><i class="bx bxl-linkedin" style="font-size: 1.5em;"></i></a>
+        </div>
+        <div class="row icon-boxes">
+            @for (int i = 0; i < 4; i++)
+            {
+<div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+    <div class="icon-box">
+        <h4 class="title"><a asp-page="">Certificate</a></h4>
+        <p class="description">In this section you can see my certificates.</p>
+    </div>
+</div>}
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        (function () {
+            "use strict";
+            /**
+             * Easy selector helper function
+             */
+            const select = (el, all = false) => {
+                el = el.trim()
+                if (all) {
+                    return [...document.querySelectorAll(el)]
+                } else {
+                    return document.querySelector(el)
+                }
+            }
+
+            /**
+             * Home type effect
+             */
+            const typed = select('.typed')
+            if (typed) {
+                let typed_strings = typed.getAttribute('data-typed-items')
+                typed_strings = typed_strings.split(',')
+                new Typed('.typed', {
+                    strings: typed_strings,
+                    loop: true,
+                    typeSpeed: 100,
+                    backSpeed: 50,
+                    backDelay: 2000
+                });
+            }
+        })()
+    </script>
+}
