@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Data;
 
 namespace Portfolio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210701065430_ChangeDataBaseOrganization")]
+    partial class ChangeDataBaseOrganization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,9 +258,6 @@ namespace Portfolio.Data.Migrations
                     b.Property<string>("CertificateName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CourseId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -320,7 +319,7 @@ namespace Portfolio.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CertificateId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CourseName")
                         .HasColumnType("nvarchar(max)");
@@ -343,14 +342,16 @@ namespace Portfolio.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SpecialtyId")
+                    b.Property<string>("UniversityId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CertificateId");
+
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("SpecialtyId");
+                    b.HasIndex("UniversityId");
 
                     b.ToTable("Courses");
                 });
@@ -415,20 +416,20 @@ namespace Portfolio.Data.Migrations
                     b.Property<string>("MoreInformation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Period")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PositionName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SectorId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("SectorId");
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Positions");
                 });
@@ -680,24 +681,19 @@ namespace Portfolio.Data.Migrations
                     b.Navigation("PrivateInformation");
                 });
 
-            modelBuilder.Entity("Portfolio.Data.Models.Certificate", b =>
-                {
-                    b.HasOne("Portfolio.Data.Models.Course", "Course")
-                        .WithOne("Certificate")
-                        .HasForeignKey("Portfolio.Data.Models.Certificate", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("Portfolio.Data.Models.Course", b =>
                 {
-                    b.HasOne("Portfolio.Data.Models.Specialty", "Specialty")
-                        .WithMany("Courses")
-                        .HasForeignKey("SpecialtyId");
+                    b.HasOne("Portfolio.Data.Models.Certificate", "Certificate")
+                        .WithMany()
+                        .HasForeignKey("CertificateId");
 
-                    b.Navigation("Specialty");
+                    b.HasOne("Portfolio.Data.Models.University", "University")
+                        .WithMany("Courses")
+                        .HasForeignKey("UniversityId");
+
+                    b.Navigation("Certificate");
+
+                    b.Navigation("University");
                 });
 
             modelBuilder.Entity("Portfolio.Data.Models.Organization", b =>
@@ -717,11 +713,11 @@ namespace Portfolio.Data.Migrations
 
             modelBuilder.Entity("Portfolio.Data.Models.Position", b =>
                 {
-                    b.HasOne("Portfolio.Data.Models.Sector", "Sector")
+                    b.HasOne("Portfolio.Data.Models.Organization", "Organization")
                         .WithMany("Positions")
-                        .HasForeignKey("SectorId");
+                        .HasForeignKey("OrganizationId");
 
-                    b.Navigation("Sector");
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Portfolio.Data.Models.Sector", b =>
@@ -784,13 +780,10 @@ namespace Portfolio.Data.Migrations
                     b.Navigation("Universities");
                 });
 
-            modelBuilder.Entity("Portfolio.Data.Models.Course", b =>
-                {
-                    b.Navigation("Certificate");
-                });
-
             modelBuilder.Entity("Portfolio.Data.Models.Organization", b =>
                 {
+                    b.Navigation("Positions");
+
                     b.Navigation("Sectors");
                 });
 
@@ -803,18 +796,10 @@ namespace Portfolio.Data.Migrations
                     b.Navigation("Universities");
                 });
 
-            modelBuilder.Entity("Portfolio.Data.Models.Sector", b =>
-                {
-                    b.Navigation("Positions");
-                });
-
-            modelBuilder.Entity("Portfolio.Data.Models.Specialty", b =>
-                {
-                    b.Navigation("Courses");
-                });
-
             modelBuilder.Entity("Portfolio.Data.Models.University", b =>
                 {
+                    b.Navigation("Courses");
+
                     b.Navigation("Specialties");
                 });
 #pragma warning restore 612, 618

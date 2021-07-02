@@ -1,0 +1,63 @@
+﻿@model Portfolio.Web.ViewModels.Administration.Dashboard.OrganizationInputModel
+@{
+    this.ViewData["Title"] = "Create Organization";
+}
+
+<form method="post" asp-action="CreateOrganization">
+    <section class="border border-primary">
+        <div class="container">
+            <p class="align-content-center">Create Company</p>
+            <div class="row" style="margin-bottom: 20px">
+
+                <div class="col-sm">
+                    <label asp-for="OrganizationName" class="text-primary"></label>
+                    <input asp-for="OrganizationName" class="form-control" />
+                    <span asp-validation-for="OrganizationName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="OrganizationSize" class="text-primary"></label>
+                    <input asp-for="OrganizationSize" class="form-control" />
+                    <span asp-validation-for="OrganizationSize" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="PrivateName" class="text-primary"></label>
+                    <input asp-for="PrivateName" class="form-control" />
+                    <span asp-validation-for="PrivateName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CountryName" class="text-primary"></label>
+                    <input asp-for="CountryName" class="form-control" />
+                    <span asp-validation-for="CountryName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="TownName" class="text-primary"></label>
+                    <input asp-for="TownName" class="form-control" />
+                    <span asp-validation-for="TownName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="SectorName" class="text-primary"></label>
+                    <input asp-for="SectorName" class="form-control" />
+                    <span asp-validation-for="SectorName" class="text-danger"></span>
+                </div>
+
+                <div class="col-sm">
+                    <label asp-for="PositionName" class="text-primary"></label>
+                    <input asp-for="PositionName" class="form-control" />
+                    <span asp-validation-for="PositionName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="PositionMoreInformation" class="text-primary"></label>
+                    <input asp-for="PositionMoreInformation" class="form-control" />
+                    <span asp-validation-for="PositionMoreInformation" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="PositionPeriod" class="text-primary"></label>
+                    <input asp-for="PositionPeriod" class="form-control" />
+                    <span asp-validation-for="PositionPeriod" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <input type="submit" class="btn-primary" />
+    <partial name="CreteCountry" />
+</form>

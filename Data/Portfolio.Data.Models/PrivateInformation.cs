@@ -9,7 +9,7 @@
 
         public PrivateInformation()
         {
-            this.ProfessionalExperiences = new HashSet<ProfessionalExperience>();
+            this.Organization = new HashSet<Organization>();
             this.Universities = new HashSet<University>();
         }
 
@@ -31,7 +31,7 @@
 
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
 
-        public virtual ICollection<ProfessionalExperience> ProfessionalExperiences { get; set; }
+        public virtual ICollection<Organization> Organization { get; set; }
 
         public virtual ICollection<University> Universities { get; set; }
     }

@@ -16,8 +16,8 @@
 
         public virtual Certificate Certificate { get; set; }
 
-        public string UniversityId { get; set; }
+        public string SpecialtyId { get; set; }
 
-        public University University { get; set; }
+        public Specialty Specialty { get; set; }
     }
 }

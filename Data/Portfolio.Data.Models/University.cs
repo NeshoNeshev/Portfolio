@@ -6,10 +6,6 @@
 
     public class University : BaseDeletableModel<string>
     {
-        public University()
-        {
-            this.Courses = new HashSet<Course>();
-        }
 
         public string UniversityName { get; set; }
 
@@ -25,6 +21,6 @@
 
         public virtual ICollection<Specialty> Specialties { get; set; }
 
-        public virtual ICollection<Course> Courses { get; set; }
+        
     }
 }

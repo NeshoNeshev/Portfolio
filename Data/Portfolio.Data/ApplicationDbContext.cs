@@ -24,8 +24,6 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
-
         public DbSet<Certificate> Certificates { get; set; }
 
         public DbSet<Country> Countries { get; set; }
@@ -33,8 +31,6 @@
         public DbSet<Organization> Organizations { get; set; }
 
         public DbSet<Position> Positions { get; set; }
-
-        public DbSet<ProfessionalExperience> ProfessionalExperiences { get; set; }
 
         public DbSet<Sector> Sectors { get; set; }
 
@@ -70,6 +66,10 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Course>()
+                .HasOne<Certificate>(s => s.Certificate)
+                .WithOne(ad => ad.Course)
+                .HasForeignKey<Certificate>(ad => ad.Id);
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

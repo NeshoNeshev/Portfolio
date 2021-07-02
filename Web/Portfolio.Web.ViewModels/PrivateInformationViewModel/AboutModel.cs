@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Portfolio.Web.ViewModels.PrivateInformationViewModel
+﻿namespace Portfolio.Web.ViewModels.PrivateInformationViewModel
 {
+    using System.Collections.Generic;
+
     public class AboutModel
     {
         public IEnumerable<PrivateInformationViewModel> privateInformation { get; set; }

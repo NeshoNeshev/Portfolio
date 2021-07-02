@@ -9,8 +9,10 @@
 
         public string MoreInformation { get; set; }
 
-        public string OrganizationId { get; set; }
+        public string Period { get; set; }
 
-        public virtual Organization Organization { get; set; }
+        public string SectorId { get; set; }
+
+        public virtual Sector Sector { get; set; }
     }
 }

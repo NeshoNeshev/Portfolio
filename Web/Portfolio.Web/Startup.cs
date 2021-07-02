@@ -61,10 +61,19 @@
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-
+            services.AddScoped(typeof(IChangeInputToUpper<>), typeof(ChangeInputToUpper<>));
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICreateOrganizationServices, CreateOrganizationServices>();
+            services.AddTransient<ICreateSectorService, CreateSectorService>();
+            services.AddTransient<ICreatePositionService, CreatePositionService>();
+            services.AddTransient<ICreateCountryService, CreateCountryService>();
+            services.AddTransient<ICreateTownService, CreateTownService>();
+            services.AddTransient<ICreateUniversityService, CreateUniversityService>();
+            services.AddTransient<ICreateSpecialtiesService, CreateSpecialtiesService>();
+            services.AddTransient<ICreateCertificatesService, CreateCertificatesService>();
+            services.AddTransient<ICreateCourseService, CreateCourseService>();
+            services.AddTransient<IGetAgeService, GetAgeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +114,7 @@
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
                         endpoints.MapRazorPages();
                     });
         }

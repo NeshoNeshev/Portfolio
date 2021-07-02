@@ -24,12 +24,12 @@
 
             var seeders = new List<ISeeder>
                           {
-                              new SettingsSeeder(),
+                             
                               new RolesSeeder(),
                               new UserSeeder(),
                               new PrivateInformationSeeder(),
-                              new ProfessionalExperiencesSeeder(),
-                              new OrganizationSeeder(),
+                              //new ProfessionalExperiencesSeeder(),
+                              //new OrganizationSeeder(),
                           };
 
             foreach (var seeder in seeders)
