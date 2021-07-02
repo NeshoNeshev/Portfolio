@@ -73,13 +73,13 @@
                 var privateName = this.privateRepository.All().Any(x => x.FirstName == input.PrivateName);
                 if (organizationName)
                 {
-                    ModelState.AddModelError(nameof(OrganizationInputModel.OrganizationName), $"Exist {input.OrganizationName}");
+                    this.ModelState.AddModelError(nameof(OrganizationInputModel.OrganizationName), $"Exist {input.OrganizationName}");
                     return this.View(input);
                 }
 
                 if (!privateName)
                 {
-                    ModelState.AddModelError(nameof(OrganizationInputModel.PrivateName), $"Exist {input.PrivateName}");
+                    this.ModelState.AddModelError(nameof(OrganizationInputModel.PrivateName), $"Not Found {input.PrivateName}");
                     return this.View(input);
                 }
             }
@@ -102,7 +102,12 @@
 
             //await this._courseService.CreateAsync(input.CourseName, input.CourseDescription, input.CourseDescription);
 
-            return PartialView();
+            return this.View();
+        }
+
+        public IActionResult CreateUniversity()
+        {
+            return this.View();
         }
     }
 }
