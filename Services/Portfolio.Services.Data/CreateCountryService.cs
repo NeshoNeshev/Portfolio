@@ -25,13 +25,13 @@
         public async Task CreateAsync(string countryName, string townName)
         {
             var exist = this.countryRepository.All().Any(n => n.CountryName == countryName);
-            var existTown = this.townRepository.All().Any(x => x.TownName == townName);
+            var existTown = this.townRepository.All().FirstOrDefault(x => x.TownName == townName);
             if (exist)
             {
                 return;
             }
 
-            if (!existTown)
+            if (existTown == null)
             {
                 await this.createTownService.CreateAsync(townName, countryName);
             }
@@ -42,6 +42,12 @@
                 Id = Guid.NewGuid().ToString(),
                 CountryName = countryName,
             };
+
+            if (country.Towns.Contains(existTown))
+            {
+                return;
+            }
+
             country.Towns.Add(town);
             await this.countryRepository.AddAsync(country);
             await this.countryRepository.SaveChangesAsync();

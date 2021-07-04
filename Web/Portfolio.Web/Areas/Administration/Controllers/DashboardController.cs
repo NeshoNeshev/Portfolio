@@ -1,4 +1,8 @@
-﻿namespace Portfolio.Web.Areas.Administration.Controllers
+﻿using System.Security.Claims;
+using Microsoft.CodeAnalysis.CSharp;
+using Portfolio.Common;
+
+namespace Portfolio.Web.Areas.Administration.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,10 +14,14 @@
     using Portfolio.Services.Data;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
 
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Area("Administration")]
     public class DashboardController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Organization> organizationRepository;
         private readonly IDeletableEntityRepository<PrivateInformation> privateRepository;
+        private readonly IDeletableEntityRepository<Town> _townRepository;
+        private readonly IDeletableEntityRepository<University> _universityRepository;
         private readonly ICreateOrganizationServices organizationServices;
         private readonly ICreateSectorService sectorService;
         private readonly ICreatePositionService positionService;
@@ -28,6 +36,8 @@
         public DashboardController(
             IDeletableEntityRepository<Organization> organizationRepository,
             IDeletableEntityRepository<PrivateInformation> privateRepository,
+            IDeletableEntityRepository<Town> townRepository,
+            IDeletableEntityRepository<University> universityRepository,
             ICreateOrganizationServices organizationServices,
             ICreateSectorService sectorService,
             ICreatePositionService positionService,
@@ -41,6 +51,8 @@
         {
             this.organizationRepository = organizationRepository;
             this.privateRepository = privateRepository;
+            _townRepository = townRepository;
+            _universityRepository = universityRepository;
             this.organizationServices = organizationServices;
             this.sectorService = sectorService;
             this.positionService = positionService;
@@ -50,6 +62,13 @@
             this.specialtiesService = specialtiesService;
             this.certificatesService = certificatesService;
             this.courseService = courseService;
+        }
+
+        [Authorize]
+        public IActionResult Index()
+        {
+
+            return this.View();
         }
 
         [Authorize]
@@ -69,6 +88,7 @@
             }
             else
             {
+
                 var organizationName = this.organizationRepository.All().Any(x => x.OrganizationName == input.OrganizationName);
                 var privateName = this.privateRepository.All().Any(x => x.FirstName == input.PrivateName);
                 if (organizationName)
@@ -82,6 +102,8 @@
                     this.ModelState.AddModelError(nameof(OrganizationInputModel.PrivateName), $"Not Found {input.PrivateName}");
                     return this.View(input);
                 }
+
+
             }
 
             await this.organizationServices.CreateAsync(input);
@@ -107,6 +129,39 @@
 
         public IActionResult CreateUniversity()
         {
+            return this.View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateUniversity(CreateUniversityViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                ModelState.Remove(nameof(CreateUniversityViewModel.UniversityName));
+                this.ModelState.AddModelError(nameof(CreateUniversityViewModel.UniversityName),$"University first Letter to upper");
+                return this.View(model);
+            }
+            else
+            {
+                var townName = this._townRepository.All().Any(x => x.TownName == model.TownName);
+                var universityName = this._universityRepository.All().Any(x => x.UniversityName == model.UniversityName);
+                var privateName = this.privateRepository.All().Any(x => x.FirstName == model.PrivateName);
+                if (universityName)
+                {
+                    this.ModelState.AddModelError(nameof(CreateUniversityViewModel.UniversityName), $"Exist {model.UniversityName}");
+                    return this.View(model);
+                }
+
+                if (!privateName)
+                {
+                    this.ModelState.AddModelError(nameof(CreateUniversityViewModel.PrivateName), $"Not Found {model.PrivateName}");
+                    return this.View(model);
+                }
+
+            }
+
+            await this.createUniversityService.CreateAsync(model);
             return this.View();
         }
     }

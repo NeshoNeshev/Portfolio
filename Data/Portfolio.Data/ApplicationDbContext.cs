@@ -66,10 +66,7 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Course>()
-                .HasOne<Certificate>(s => s.Certificate)
-                .WithOne(ad => ad.Course)
-                .HasForeignKey<Certificate>(ad => ad.Id);
+           
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

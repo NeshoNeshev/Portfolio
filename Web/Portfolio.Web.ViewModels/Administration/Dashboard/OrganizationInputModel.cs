@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Web.ViewModels.Administration.Dashboard
+﻿using Portfolio.Data.Models;
+
+namespace Portfolio.Web.ViewModels.Administration.Dashboard
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -7,6 +9,7 @@
 
         [Required]
         [Display(Name = "Enter the Company Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string OrganizationName { get; set; }
 
         [Required]
@@ -14,23 +17,28 @@
         public string OrganizationSize { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Private Name")]
+        [Display(Name = "Private Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string PrivateName { get; set; }
 
         [Required]
         [Display(Name = "Enter the Country Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string CountryName { get; set; }
 
         [Required]
         [Display(Name = "Enter the Town Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string TownName { get; set; }
 
         [Required]
         [Display(Name = "Enter the Sector Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string SectorName { get; set; }
 
         [Required]
         [Display(Name = "Enter the Position Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string PositionName { get; set; }
 
         [Required]
@@ -40,5 +48,6 @@
         [Required]
         [Display(Name = "Enter the Position Period")]
         public string PositionPeriod { get; set; }
+
     }
 }

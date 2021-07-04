@@ -10,25 +10,34 @@
     public class CreateCourseService : ICreateCourseService
     {
         private readonly IDeletableEntityRepository<Certificate> certificateRepository;
-        private readonly IDeletableEntityRepository<University> universRepository;
+        private readonly IDeletableEntityRepository<Specialty> specialityRepository;
         private readonly IDeletableEntityRepository<Course> courseRepository;
+        private readonly ICreateCertificatesService certificatesService;
 
-        public CreateCourseService(IDeletableEntityRepository<Certificate>certificateRepository,
-            IDeletableEntityRepository<University> universRepository,
-            IDeletableEntityRepository<Course>courseRepository)
+        public CreateCourseService(IDeletableEntityRepository<Certificate> certificateRepository,
+            IDeletableEntityRepository<Specialty>specialityRepository,
+            IDeletableEntityRepository<Course> courseRepository,
+            ICreateCertificatesService certificatesService)
         {
             this.certificateRepository = certificateRepository;
-            this.universRepository = universRepository;
+            this.specialityRepository = specialityRepository;
             this.courseRepository = courseRepository;
+            this.certificatesService = certificatesService;
         }
 
-        public async Task CreateAsync(string courseName, string courseDescription, string date)
-        {
-            var certificates = this.certificateRepository.All().Where(x => x.Id != null).Select(x => x.Id).ToList();
-            var certificateId = certificates[0];
 
-            var universities = this.universRepository.All().Where(x => x.Id != null).Select(x => x.Id).ToList();
-            var universityId = universities[0];
+        public async Task CreateAsync(string courseName, string courseDescription, string date, string certificateName, string certificateDate, string certificateDescription, string certificateLInk, string specialityName)
+        {
+            string item = "default";
+
+            var certificate = this.certificateRepository.All()
+                .FirstOrDefault(x => x.CertificateName == certificateName);
+
+            var specialty = this.specialityRepository.All().FirstOrDefault(x => x.SpecialtyName == specialityName);
+            if (specialty == null)
+            {
+                return;
+            }
 
             var course = new Course
             {
@@ -36,12 +45,19 @@
                 CourseName = courseName,
                 Description = courseDescription,
                 Date = date,
-                CertificateId = certificateId,
-                //UniversityId = universityId,
+                Specialty = specialty,
             };
-
             await this.courseRepository.AddAsync(course);
             await this.courseRepository.SaveChangesAsync();
+            if (course.Certificates.Count > 0)
+            {
+                return;
+            }
+
+            if (certificate == null)
+            {
+                await this.certificatesService.CreateAsync(certificateName, certificateLInk, certificateDescription, certificateDate, courseName);
+            }
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Portfolio.Services.Data
 {
     public interface ICreateCertificatesService
     {
-        Task CreateAsync(string name, string link, string description, string date );
+        Task CreateAsync(string name, string link, string description, string date, string cName );
     }
 }

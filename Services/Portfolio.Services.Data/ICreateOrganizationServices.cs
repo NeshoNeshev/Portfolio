@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Services.Data
+﻿using System.Collections.Generic;
+
+namespace Portfolio.Services.Data
 {
     using System.Threading.Tasks;
 
@@ -6,6 +8,7 @@
 
     public interface ICreateOrganizationServices
     {
+        public IEnumerable<T> GetAll<T>(int? count = null);
         Task CreateAsync(OrganizationInputModel input);
     }
 }

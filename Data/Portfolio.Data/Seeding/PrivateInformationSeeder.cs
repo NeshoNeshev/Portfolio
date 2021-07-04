@@ -1,14 +1,13 @@
-﻿using System.Linq;
-
-namespace Portfolio.Data.Seeding
+﻿namespace Portfolio.Data.Seeding
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    using Portfolio.Common;
     using Models;
+    using Portfolio.Common;
 
     public class PrivateInformationSeeder : ISeeder
     {
@@ -22,27 +21,26 @@ namespace Portfolio.Data.Seeding
             {
                 return;
             }
-            else if (dbContext.PrivateInformations.Any())
+
+            if (dbContext.PrivateInformations.Any())
             {
                 return;
             }
-            else
+
+            var privateInformation = new PrivateInformation()
             {
-                var privateInformation = new PrivateInformation()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    FirstName = "Nesho",
-                    LastName = "Georgiev",
-                    ThirdName = "Neshev",
-                    Birthday = "31.10.1978",
-                    Email = "neshev1978@gmail.com",
-                    Gender = "Men",
-                    PhoneNumber = "+359 888 888 888",
-                    Description = GlobalConstants.UserDescription,
-                };
-                user.Result.PrivateInformation = privateInformation;
-                await dbContext.SaveChangesAsync();
-            }
+                Id = Guid.NewGuid().ToString(),
+                FirstName = "Nesho",
+                LastName = "Georgiev",
+                ThirdName = "Neshev",
+                Birthday = "31.10.1978",
+                Email = "neshev1978@gmail.com",
+                Gender = "Men",
+                PhoneNumber = "+359 888 888 888",
+                Description = GlobalConstants.UserDescription,
+            };
+            user.Result.PrivateInformation = privateInformation;
+            await dbContext.SaveChangesAsync();
         }
     }
 }

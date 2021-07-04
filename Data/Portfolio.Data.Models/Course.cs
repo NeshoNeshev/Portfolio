@@ -1,4 +1,7 @@
-﻿namespace Portfolio.Data.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Portfolio.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -6,18 +9,19 @@
 
     public class Course : BaseDeletableModel<string>
     {
+        public Course()
+        {
+            this.Certificates = new HashSet<Certificate>();
+        }
         public string CourseName { get; set; }
 
         public string Description { get; set; }
 
         public string Date { get; set; }
 
-        public string CertificateId { get; set; }
-
-        public virtual Certificate Certificate { get; set; }
-
         public string SpecialtyId { get; set; }
 
         public Specialty Specialty { get; set; }
+        public virtual ICollection<Certificate> Certificates { get; set; }
     }
 }

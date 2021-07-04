@@ -1,4 +1,9 @@
-﻿namespace Portfolio.Services.Data
+﻿using System.Security.Claims;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Portfolio.Services.Mapping;
+
+namespace Portfolio.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +25,8 @@
         private readonly ICreateTownService townService;
         private readonly ICreateSectorService sectorService;
         private readonly ICreatePositionService createPosition;
-        private readonly IChangeInputToUpper<OrganizationInputModel> changeInputFirstLetter;
+        private readonly IChangeInputToUpper<OrganizationInputModel> changeInputToUpper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public CreateOrganizationServices(
             IDeletableEntityRepository<PrivateInformation> privateInformationRepository,
@@ -32,7 +38,8 @@
             ICreateTownService townService,
             ICreateSectorService sectorService,
             ICreatePositionService createPosition,
-            IChangeInputToUpper<OrganizationInputModel> changeInputFirstLetter
+            IChangeInputToUpper<OrganizationInputModel> changeInputToUpper,
+            UserManager<ApplicationUser> userManager
         )
         {
             this.privateInformationRepository = privateInformationRepository;
@@ -44,33 +51,40 @@
             this.townService = townService;
             this.sectorService = sectorService;
             this.createPosition = createPosition;
-            this.changeInputFirstLetter = changeInputFirstLetter;
+            this.changeInputToUpper = changeInputToUpper;
+            _userManager = userManager;
         }
-        
+
         public async Task CreateAsync(OrganizationInputModel input)
         {
-            var privateInformation = this.privateInformationRepository.All().FirstOrDefault(x => x.FirstName == input.PrivateName);
-            var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == input.CountryName);
+
             var organizationExist = this.organizationRepository.All().Any(x => x.OrganizationName == input.OrganizationName);
             if (organizationExist)
             {
                 return;
             }
 
+            var privateInformation = this.privateInformationRepository.All().FirstOrDefault(x => x.FirstName == input.PrivateName);
             if (privateInformation == null)
             {
                 return;
             }
 
-            List<string> forbidden = new List<string>() { input.PositionMoreInformation };
-            this.changeInputFirstLetter.ToUpper(input, forbidden);
+            //List<string> forbidden = new List<string>() { input.PositionMoreInformation };
+            // var a =this.changeInputToUpper.ToUpper(input, forbidden);
+
+            var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == input.CountryName);
             if (country == null)
             {
                 await this.createCountryService.CreateAsync(input.CountryName, input.TownName);
             }
             else
             {
-                await this.townService.CreateAsync(input.TownName, input.CountryName);
+                var exist = country.Towns.Any(x => x.TownName == input.TownName);
+                if (!exist)
+                {
+                    await this.townService.CreateAsync(input.TownName, input.CountryName);
+                }
             }
 
             var organization = new Organization
@@ -90,7 +104,7 @@
 
             if (sector == null)
             {
-                await this.sectorService.CreateAsync(input.SectorName, input.OrganizationName, input.PositionName, input.PositionMoreInformation, input.PositionPeriod);
+                await this.sectorService.CreateAsync(input.SectorName,input.OrganizationName,input.PositionName,input.PositionMoreInformation,input.PositionPeriod);
             }
             else
             {
@@ -104,7 +118,15 @@
                 organization.Sectors.Add(sector);
             }
         }
+        public IEnumerable<T> GetAll<T>(int? count = null)
+        {
+            IQueryable<Organization> query = this.organizationRepository.All().OrderBy(x => x.OrganizationName);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
 
-        
+            return query.To<T>().ToList();
+        }
     }
 }

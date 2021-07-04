@@ -4,8 +4,10 @@
 
     public class CreateUniversityViewModel
     {
+
         [Required]
         [Display(Name = "Enter the University Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string UniversityName { get; set; }
 
         [Required]
@@ -13,27 +15,32 @@
         public string PeriodInUniversity { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Period In University")]
-        public string CountryName { get; set; }
-
-        [Required]
         [Display(Name = "Private Name")]
         public string PrivateName { get; set; }
 
         [Required]
+        [Display(Name = "Enter the Country Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
+        public string CountryName { get; set; }
+
+        [Required]
         [Display(Name = "Town Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string TownName { get; set; }
 
         [Required]
         [Display(Name = "Speciality Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string SpecialityName { get; set; }
 
         [Required]
         [Display(Name = "Speciality Degree")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string SpecialityDegree { get; set; }
 
         [Required]
-        [Display(Name = "Course Degree")]
+        [Display(Name = "Course Name")]
+        [RegularExpression("^[A-Z][a-z]*$")]
         public string CourseName { get; set; }
 
         [Required]
@@ -44,21 +51,16 @@
         [Display(Name = "Course Date")]
         public string CourseDate{ get; set; }
 
-        [Required]
         [Display(Name = "Certificate Name")]
         public string CertificateName { get; set; }
 
-        [Required]
         [Display(Name = "Certificate Description")]
         public string CertificateDescription { get; set; }
 
-        [Required]
         [Display(Name = "Certificate Date")]
         public string CertificateDate { get; set; }
 
-        [Required]
         [Display(Name = "Certificate Link")]
-        [Url]
         public string CertificateLink{ get; set; }
     }
 }

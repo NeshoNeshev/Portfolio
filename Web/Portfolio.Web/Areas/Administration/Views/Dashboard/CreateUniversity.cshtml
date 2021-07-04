@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Portfolio.Web.ViewModels.Administration.Dashboard.CreateUniversityViewModel
 @{
+    this.ViewData["Title"] = "Create University";
 }
+
+<form method="post" asp-action="CreateUniversity">
+    <section class="border border-primary">
+        <div class="container">
+            <p class="align-content-center">Create University</p>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-sm">
+                    <label asp-for="UniversityName" class="text-primary"></label>
+                    <input asp-for="UniversityName" class="form-control" />
+                    <span asp-validation-for="UniversityName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="PeriodInUniversity" class="text-primary"></label>
+                    <input asp-for="PeriodInUniversity" class="form-control" />
+                    <span asp-validation-for="PeriodInUniversity" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CountryName" class="text-primary"></label>
+                    <input asp-for="CountryName" class="form-control" />
+                    <span asp-validation-for="CountryName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="TownName" class="text-primary"></label>
+                    <input asp-for="TownName" class="form-control" />
+                    <span asp-validation-for="TownName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="PrivateName" class="text-primary"></label>
+                    <input asp-for="PrivateName" class="form-control" />
+                    <span asp-validation-for="PrivateName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="SpecialityName" class="text-primary"></label>
+                    <input asp-for="SpecialityName" class="form-control" />
+                    <span asp-validation-for="SpecialityName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="SpecialityDegree" class="text-primary"></label>
+                    <input asp-for="SpecialityDegree" class="form-control" />
+                    <span asp-validation-for="SpecialityDegree" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CourseName" class="text-primary"></label>
+                    <input asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CourseDescription" class="text-primary"></label>
+                    <input asp-for="CourseDescription" class="form-control" />
+                    <span asp-validation-for="CourseDescription" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CourseDate" class="text-primary"></label>
+                    <input asp-for="CourseDate" class="form-control" />
+                    <span asp-validation-for="CourseDate" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CertificateName" class="text-primary"></label>
+                    <input asp-for="CertificateName" class="form-control" />
+                    <span asp-validation-for="CertificateName" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CertificateDescription" class="text-primary"></label>
+                    <input asp-for="CertificateDescription" class="form-control" />
+                    <span asp-validation-for="CertificateDescription" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CertificateDate" class="text-primary"></label>
+                    <input asp-for="CertificateDate" class="form-control" />
+                    <span asp-validation-for="CertificateDate" class="text-danger"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="CertificateLink" class="text-primary"></label>
+                    <input asp-for="CertificateLink" class="form-control" />
+                    <span asp-validation-for="CertificateLink" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <input type="submit" class="btn-primary" />
+</form>

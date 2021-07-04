@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
-
-namespace Portfolio.Services.Data
+﻿namespace Portfolio.Services.Data
 {
+    using System.Threading.Tasks;
+
+    using Portfolio.Web.ViewModels.Administration.Dashboard;
+
     public interface ICreateUniversityService
     {
-        Task CreateAsync(string name, string period);
+        Task CreateAsync(CreateUniversityViewModel model);
     }
 }

@@ -31,4 +31,8 @@
     <ProjectReference Include="..\..\Web\Portfolio.Web\Portfolio.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Pages\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,68 @@
+﻿@model Portfolio.Web.ViewModels.Administration.Dashboard.CreateSectorViewModel
+@{
+    ViewData["Title"] = "CreateSector";
+}
+
+<h1>CreateSector</h1>
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="CreateSector">
+                    <section class="border border-primary">
+                        <div class="container">
+                            <p class="align-content-center">Create Company</p>
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-sm">
+                                    <label asp-for="OrganizationName" class="text-primary"></label>
+                                    <select asp-for="OrganizationName" asp-items="Model.OrganizationDrop.Select(x=>new SelectListItem(x.OrganizationName,x.Id))"></select>
+
+                                    <span asp-validation-for="OrganizationName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                    <label asp-for="SectorName" class="text-primary"></label>
+                                    <input asp-for="SectorName" class="form-control" />
+                                    <span asp-validation-for="SectorName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm">
+                                    <label asp-for="PositionName" class="text-primary"></label>
+                                    <input asp-for="PositionName" class="form-control" />
+                                    <span asp-validation-for="PositionName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                    <label asp-for="PositionMoreInformation" class="text-primary"></label>
+                                    <input asp-for="PositionMoreInformation" class="form-control" />
+                                    <span asp-validation-for="PositionMoreInformation" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm">
+                                    <label asp-for="PositionPeriod" class="text-primary"></label>
+                                    <input asp-for="PositionPeriod" class="form-control" />
+                                    <span asp-validation-for="PositionPeriod" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <input type="submit" class="btn-primary" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

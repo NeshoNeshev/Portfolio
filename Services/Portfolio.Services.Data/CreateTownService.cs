@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Services.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Portfolio.Services.Data
 {
     using System;
     using System.Linq;
@@ -20,7 +22,7 @@
 
         public async Task CreateAsync(string townName, string countryName)
         {
-            var country = this.countryRepository.All().FirstOrDefault(x=>x.CountryName == countryName);
+            var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == countryName);
             var exist = this.townRepository.All().Any(x => x.TownName == townName);
             if (exist)
             {
