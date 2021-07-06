@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class CreateUniversityViewModel
+    public class CreateUniversityInputModel
     {
 
         [Required]

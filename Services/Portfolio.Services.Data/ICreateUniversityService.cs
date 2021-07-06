@@ -6,6 +6,6 @@
 
     public interface ICreateUniversityService
     {
-        Task CreateAsync(CreateUniversityViewModel model);
+        Task CreateAsync(CreateUniversityInputModel model);
     }
 }

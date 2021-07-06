@@ -16,7 +16,7 @@
         private readonly IDeletableEntityRepository<Specialty> _specialityRepository;
         private readonly IDeletableEntityRepository<Country> countryRepository;
         private readonly IDeletableEntityRepository<PrivateInformation> privatEntityRepository;
-        private readonly IChangeInputToUpper<CreateUniversityViewModel> changeInputToUpper;
+        private readonly IChangeInputToUpper<CreateUniversityInputModel> changeInputToUpper;
         private readonly ICreateCountryService createCountry;
         private readonly ICreateTownService townService;
         private readonly ICreateSpecialtiesService _specialtiesService;
@@ -27,7 +27,7 @@
             IDeletableEntityRepository<Specialty> specialityRepository,
             IDeletableEntityRepository<Country> countryRepository,
             IDeletableEntityRepository<PrivateInformation> privatEntityRepository,
-            IChangeInputToUpper<CreateUniversityViewModel> changeInputToUpper,
+            IChangeInputToUpper<CreateUniversityInputModel> changeInputToUpper,
             ICreateCountryService createCountry,
             ICreateTownService townService,
             ICreateSpecialtiesService specialtiesService,
@@ -45,7 +45,7 @@
             _courseService = courseService;
         }
 
-        public async Task CreateAsync(CreateUniversityViewModel model)
+        public async Task CreateAsync(CreateUniversityInputModel model)
         {
             var privateInformation = this.privatEntityRepository.All().FirstOrDefault(x => x.FirstName == model.PrivateName);
             var universityExist = this.universityRepository.All().Any(x => x.UniversityName == model.UniversityName);

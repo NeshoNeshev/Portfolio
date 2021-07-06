@@ -9,12 +9,12 @@ namespace Portfolio.Services.Data
     public class CreateCertificatesService : ICreateCertificatesService
     {
         private readonly IDeletableEntityRepository<Certificate> certificateRepository;
-        private readonly IDeletableEntityRepository<Course> _c;
+        private readonly IDeletableEntityRepository<Course> courseRepository;
 
-        public CreateCertificatesService(IDeletableEntityRepository<Certificate> certificateRepository,IDeletableEntityRepository<Course>c)
+        public CreateCertificatesService(IDeletableEntityRepository<Certificate> certificateRepository,IDeletableEntityRepository<Course>course)
         {
             this.certificateRepository = certificateRepository;
-            _c = c;
+            course = course;
         }
 
         public async Task CreateAsync(string certificateName, string link, string description, string date, string cName)
@@ -25,7 +25,7 @@ namespace Portfolio.Services.Data
                 return;
             }
 
-            var c = this._c.All().FirstOrDefault(x => x.CourseName == cName);
+            var course = this.courseRepository.All().FirstOrDefault(x => x.CourseName == cName);
             var certificate = new Certificate
             {
                 Id = Guid.NewGuid().ToString(),
@@ -34,7 +34,7 @@ namespace Portfolio.Services.Data
                 Description = description,
                 Date = date,
             };
-            certificate.Course = c;
+            certificate.Course = course;
             await this.certificateRepository.AddAsync(certificate);
             await this.certificateRepository.SaveChangesAsync();
         }

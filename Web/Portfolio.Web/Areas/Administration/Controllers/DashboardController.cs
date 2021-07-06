@@ -1,6 +1,10 @@
 ﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
 using Portfolio.Common;
+using Portfolio.Web.ViewModels.Administration.Dashboard;
 
 namespace Portfolio.Web.Areas.Administration.Controllers
 {
@@ -47,7 +51,7 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             ICreateSpecialtiesService specialtiesService,
             ICreateCertificatesService certificatesService,
             ICreateCourseService courseService
-            )
+        )
         {
             this.organizationRepository = organizationRepository;
             this.privateRepository = privateRepository;
@@ -71,98 +75,26 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             return this.View();
         }
 
-        [Authorize]
-        public IActionResult CreateOrganization()
-        {
-
-            return this.View();
-        }
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateOrganization(OrganizationInputModel input)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-            else
-            {
-
-                var organizationName = this.organizationRepository.All().Any(x => x.OrganizationName == input.OrganizationName);
-                var privateName = this.privateRepository.All().Any(x => x.FirstName == input.PrivateName);
-                if (organizationName)
-                {
-                    this.ModelState.AddModelError(nameof(OrganizationInputModel.OrganizationName), $"Exist {input.OrganizationName}");
-                    return this.View(input);
-                }
-
-                if (!privateName)
-                {
-                    this.ModelState.AddModelError(nameof(OrganizationInputModel.PrivateName), $"Not Found {input.PrivateName}");
-                    return this.View(input);
-                }
 
 
-            }
 
-            await this.organizationServices.CreateAsync(input);
 
-            //await this.sectorService.CreateAsync(input.SectorName);
 
-            //await this._positionService.CreateAsync(input.PositionName, input.MoreInformation);
+        //await this.sectorService.CreateAsync(input.SectorName);
 
-            //await this._countryService.CreateAsync(input.CountryName);
+        //await this._positionService.CreateAsync(input.PositionName, input.MoreInformation);
 
-            //await this._createTownService.CreateAsync(input.TownName);
+        //await this._countryService.CreateAsync(input.CountryName);
 
-            //await this._createUniversityService.CreateAsync(input.UniversityName, input.UniversityPeriod);
+        //await this._createTownService.CreateAsync(input.TownName);
 
-            //await this._specialtiesService.CreateAsync(input.SpecialityName, input.Degree);
+        //await this._createUniversityService.CreateAsync(input.UniversityName, input.UniversityPeriod);
 
-            //await this._certificatesService.CreateAsync(input.CertificateName, input.Link, input.Description, input.Date);
+        //await this._specialtiesService.CreateAsync(input.SpecialityName, input.Degree);
 
-            //await this._courseService.CreateAsync(input.CourseName, input.CourseDescription, input.CourseDescription);
+        //await this._certificatesService.CreateAsync(input.CertificateName, input.Link, input.Description, input.Date);
 
-            return this.View();
-        }
+        //await this._courseService.CreateAsync(input.CourseName, input.CourseDescription, input.CourseDescription);
 
-        public IActionResult CreateUniversity()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateUniversity(CreateUniversityViewModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                ModelState.Remove(nameof(CreateUniversityViewModel.UniversityName));
-                this.ModelState.AddModelError(nameof(CreateUniversityViewModel.UniversityName),$"University first Letter to upper");
-                return this.View(model);
-            }
-            else
-            {
-                var townName = this._townRepository.All().Any(x => x.TownName == model.TownName);
-                var universityName = this._universityRepository.All().Any(x => x.UniversityName == model.UniversityName);
-                var privateName = this.privateRepository.All().Any(x => x.FirstName == model.PrivateName);
-                if (universityName)
-                {
-                    this.ModelState.AddModelError(nameof(CreateUniversityViewModel.UniversityName), $"Exist {model.UniversityName}");
-                    return this.View(model);
-                }
-
-                if (!privateName)
-                {
-                    this.ModelState.AddModelError(nameof(CreateUniversityViewModel.PrivateName), $"Not Found {model.PrivateName}");
-                    return this.View(model);
-                }
-
-            }
-
-            await this.createUniversityService.CreateAsync(model);
-            return this.View();
-        }
     }
 }

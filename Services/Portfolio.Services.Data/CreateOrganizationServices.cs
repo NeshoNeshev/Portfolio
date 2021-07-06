@@ -1,7 +1,4 @@
-﻿using System.Security.Claims;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Portfolio.Services.Mapping;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Portfolio.Services.Data
 {
@@ -10,8 +7,10 @@ namespace Portfolio.Services.Data
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
 
     public class CreateOrganizationServices : ICreateOrganizationServices
@@ -52,7 +51,7 @@ namespace Portfolio.Services.Data
             this.sectorService = sectorService;
             this.createPosition = createPosition;
             this.changeInputToUpper = changeInputToUpper;
-            _userManager = userManager;
+            this._userManager = userManager;
         }
 
         public async Task CreateAsync(OrganizationInputModel input)
@@ -69,9 +68,6 @@ namespace Portfolio.Services.Data
             {
                 return;
             }
-
-            //List<string> forbidden = new List<string>() { input.PositionMoreInformation };
-            // var a =this.changeInputToUpper.ToUpper(input, forbidden);
 
             var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == input.CountryName);
             if (country == null)
@@ -99,25 +95,8 @@ namespace Portfolio.Services.Data
 
             await this.organizationRepository.AddAsync(organization);
             await this.organizationRepository.SaveChangesAsync();
-
-            var sector = this.sectorRepository.All().FirstOrDefault(x => x.SectorName == input.SectorName);
-
-            if (sector == null)
-            {
-                await this.sectorService.CreateAsync(input.SectorName,input.OrganizationName,input.PositionName,input.PositionMoreInformation,input.PositionPeriod);
-            }
-            else
-            {
-                var position = this.positionRepository.All().FirstOrDefault(x => x.PositionName == input.PositionName);
-                if (position == null)
-                {
-                    await this.createPosition.CreateAsync(input.PositionName, input.PositionMoreInformation, input.PositionPeriod);
-                }
-
-                sector.Positions.Add(position);
-                organization.Sectors.Add(sector);
-            }
         }
+
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
             IQueryable<Organization> query = this.organizationRepository.All().OrderBy(x => x.OrganizationName);
@@ -128,5 +107,15 @@ namespace Portfolio.Services.Data
 
             return query.To<T>().ToList();
         }
+
+        public bool FindByNameAsync(string name)
+            => this.organizationRepository
+                .All()
+                .Any(s => s.OrganizationName == name);
+
+        public bool FindByIdAsync(string id) => this.organizationRepository
+            .All()
+            .Any(x => x.Id == id);
+
     }
 }

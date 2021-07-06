@@ -7,7 +7,14 @@ namespace Portfolio.Services.Data
 
     public interface ICreateSectorService
     {
-        Task CreateAsync(string sectorName, string organizationName, string positionName, string positionMoreInformation, string positionPeriod);
+        Task CreateAsync(CreateSectorInputModel model);
+
         public IEnumerable<T> GetAll<T>(int? count = null);
+
+        public bool FindByNameAsync(string name);
+
+        public bool FindByIdAsync(string id);
+        public  Task<T> GetByName<T>(string name);
+        public Task UpdateAsync(EditSectorInputModel input);
     }
 }
