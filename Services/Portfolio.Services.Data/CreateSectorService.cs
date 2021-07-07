@@ -28,16 +28,16 @@
 
         public async Task CreateAsync(CreateSectorInputModel model)
         {
-            var organization = this.organizationRepository.All().FirstOrDefault(x=>x.OrganizationName == model.OrganizationName);
+            var organization = this.organizationRepository.All().FirstOrDefault(x=>x.Id == model.OrganizationId);
             if (organization == null)
             {
-                throw new InvalidOperationException("Organization Can't be null");
+               return;
             }
 
-            var exist = this.sectoRepository.All().Any(x=> x.SectorName == model.SectorName);
+            var exist = this.sectoRepository.All().Any(x => x.SectorName == model.SectorName);
             if (exist)
             {
-                throw new InvalidOperationException("Sector exist");
+                return;
             }
 
             var sector = new Sector
@@ -82,7 +82,7 @@
         {
             var sector = this.sectoRepository
                 .All()
-                .FirstOrDefault(c => c.SectorName == input.SectorName);
+                .FirstOrDefault(x => x.Id == input.Id);
 
             sector.SectorName = input.NewSectorName;
 

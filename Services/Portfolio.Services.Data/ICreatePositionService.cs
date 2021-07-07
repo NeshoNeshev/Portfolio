@@ -8,8 +8,12 @@ namespace Portfolio.Services.Data
     public interface ICreatePositionService
     {
         Task CreateAsync(CreatePositionInputModel model);
+
         public Task UpdateAsync(EditPositionInputModel input);
+
         public bool FindByNameAsync(string name);
-        //public IEnumerable<T> GetAll<T>(int? count = null);
+        public bool FindByIdAsync(string id);
+
+        public IEnumerable<T> GetAll<T>(int? count = null);
     }
 }

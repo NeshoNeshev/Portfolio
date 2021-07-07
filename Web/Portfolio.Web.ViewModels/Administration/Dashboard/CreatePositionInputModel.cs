@@ -7,14 +7,10 @@
     using Portfolio.Data.Models;
     using Portfolio.Services.Mapping;
 
-    public class CreatePositionInputModel
+    public class CreatePositionInputModel : IMapFrom<Position>
     {
         [Required]
-        [DisplayName("Organization Name")]
-        public string OrganizationId { get; set; }
-
-        [Required]
-        [DisplayName("Sector Name")]
+        [DisplayName("Sectors")]
         public string SectorId { get; set; }
 
         [Required]
@@ -29,5 +25,7 @@
         [Required]
         [Display(Name = "Enter Position Period")]
         public string PositionPeriod { get; set; }
+
+        public ICollection<SectorDropDownViewModel> SectorDropDown { get; set; }
     }
 }

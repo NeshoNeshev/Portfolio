@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Portfolio.Web.ViewModels.Administration.PositionViewModel;
-
-namespace Portfolio.Web.ViewModels.Administration.SectorViewModels
+﻿namespace Portfolio.Web.ViewModels.Administration.SectorViewModels
 {
+    using System.Collections.Generic;
+
     public class AllSectorsViewModel
     {
         public IEnumerable<SectorViewModel> Sector { get; set; }

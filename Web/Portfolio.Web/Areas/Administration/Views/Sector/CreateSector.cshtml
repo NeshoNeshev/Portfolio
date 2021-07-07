@@ -1,26 +1,23 @@
 ﻿@model Portfolio.Web.ViewModels.Administration.Dashboard.CreateSectorInputModel
 @{
-    ViewData["Title"] = "CreateSector";
+    ViewData["Title"] = "Create Sector";
 }
-
-<h1>CreateSector</h1>
-
-
-
+<div class="text-center">
+    <h1>@this.ViewData["Title"]</h1>
+</div>
 <form method="post" asp-action="CreateSector">
     <section class="border border-primary">
         <div class="container">
-            <p class="align-content-center">Create Company</p>
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-sm">
+                <div class="col-md-4">
                     <label asp-for="SectorName" class="text-primary"></label>
                     <input asp-for="SectorName" class="form-control" />
                     <span asp-validation-for="SectorName" class="text-danger"></span>
                 </div>
-                <div class="col-sm">
-                    <label asp-for="OrganizationName" class="text-primary"></label>
-                    <input asp-for="OrganizationName" class="form-control" />
-                    <span asp-validation-for="OrganizationName" class="text-danger"></span>
+                <div class="col-md-4">
+                    <label asp-for="OrganizationId" class="text-primary"></label>
+                    <select asp-for="OrganizationId" asp-items="Model.OrganizationDropDown.Select(x=> new SelectListItem(x.OrganizationName,x.Id))" class="form-control"></select>
+                    <span asp-validation-for="OrganizationId" class="text-danger"></span>
                 </div>
             </div>
         </div>

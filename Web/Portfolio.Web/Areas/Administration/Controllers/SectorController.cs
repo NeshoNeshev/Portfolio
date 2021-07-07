@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Portfolio.Web.Areas.Administration.Controllers
+﻿namespace Portfolio.Web.Areas.Administration.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -40,8 +38,10 @@ namespace Portfolio.Web.Areas.Administration.Controllers
 
         public IActionResult CreateSector()
         {
-
-            return this.View();
+            var organizations = this.organizationServices.GetAll<OrganizationDropDownViewModel>().ToList();
+            var viewModel = new CreateSectorInputModel();
+            viewModel.OrganizationDropDown = organizations;
+            return this.View(viewModel);
 
         }
 
@@ -56,36 +56,26 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             else
             {
                 var sectorName = this.createSector.FindByNameAsync(model.SectorName);
-                var organization = this.organizationServices.FindByNameAsync(model.OrganizationName);
+                var organization = this.organizationServices.FindByIdAsync(model.OrganizationId);
                 if (sectorName)
                 {
                     this.ModelState.AddModelError(nameof(CreateSectorInputModel.SectorName), $"Exist {model.SectorName}");
                     return this.View(model);
                 }
 
-                if (!organization)
-                {
-                    this.ModelState.AddModelError(nameof(CreateSectorInputModel.OrganizationName), $"Not Exist {model.OrganizationName}");
-                    return this.View(model);
-                }
-
-                try
-                {
-                    await this.createSector.CreateAsync(model);
-                }
-                catch (Exception e)
-                {
-                    return this.View(model);
-                }
+                await this.createSector.CreateAsync(model);
             }
 
             return this.RedirectToAction("AllSectors");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit()
+        public IActionResult Edit()
         {
-            return this.View();
+            var sectors = this.createSector.GetAll<SectorDropDownViewModel>().ToList();
+            var viewModel = new EditSectorInputModel();
+            viewModel.SectorDropDown = sectors;
+            return this.View(viewModel);
         }
 
         [HttpPost]
@@ -95,16 +85,6 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
-            }
-            else
-            {
-                var exist = this.createSector.FindByNameAsync(model.SectorName);
-
-                if (!exist)
-                {
-                    this.ModelState.AddModelError(nameof(EditSectorInputModel.SectorName), $"Not Exist {model.SectorName}");
-                    return this.View(model);
-                }
             }
             await this.createSector.UpdateAsync(model);
 

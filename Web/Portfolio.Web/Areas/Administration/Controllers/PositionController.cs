@@ -16,13 +16,13 @@ namespace Portfolio.Web.Areas.Administration.Controllers
 
     public class PositionController : AdministrationController
     {
-        private readonly ICreateOrganizationServices _organizationServices;
+        private readonly ICreateSectorService _sectorService;
         private readonly ICreatePositionService _positionService;
         private readonly IDeletableEntityRepository<Position> _positionRepository;
 
-        public PositionController(ICreateOrganizationServices organizationServices, ICreatePositionService positionService,IDeletableEntityRepository<Position> positionRepository)
+        public PositionController( ICreateSectorService sectorService,ICreatePositionService positionService,IDeletableEntityRepository<Position> positionRepository)
         {
-            _organizationServices = organizationServices;
+            _sectorService = sectorService;
             _positionService = positionService;
             _positionRepository = positionRepository;
         }
@@ -31,7 +31,10 @@ namespace Portfolio.Web.Areas.Administration.Controllers
         [Authorize]
         public IActionResult CreatePosition()
         {
-            return this.View();
+            var sectors = this._sectorService.GetAll<SectorDropDownViewModel>().ToList();
+            var viewModel = new CreatePositionInputModel();
+            viewModel.SectorDropDown = sectors;
+            return this.View(viewModel);
         }
 
         [HttpPost]
@@ -44,8 +47,8 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             }
             else
             {
-                var privateName = this._positionRepository.All().Any(x => x.PositionName == positionModel.PositionName);
-                if (privateName)
+                var positionName = this._positionService.FindByNameAsync(positionModel.PositionName);
+                if (positionName)
                 {
                     this.ModelState.AddModelError(nameof(CreatePositionInputModel.PositionName), $"Exist {positionModel.PositionName}");
                     return this.View(positionModel);
@@ -57,9 +60,12 @@ namespace Portfolio.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit()
+        public IActionResult Edit()
         {
-            return this.View();
+            var positions = this._positionService.GetAll<PositionDropDownViewModel>().ToList();
+            var viewModel = new EditPositionInputModel();
+            viewModel.DropDownModel = positions;
+            return this.View(viewModel);
         }
 
         [HttpPost]
@@ -72,11 +78,11 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             }
             else
             {
-                var exist = this._positionService.FindByNameAsync(model.PositionName);
+                var exist = this._positionService.FindByIdAsync(model.Id);
 
                 if (!exist)
                 {
-                    this.ModelState.AddModelError(nameof(EditSectorInputModel.SectorName), $"Not Exist {model.PositionName}");
+                    this.ModelState.AddModelError(nameof(EditPositionInputModel.Id), $"Not Exist {model.Id}");
                     return this.View(model);
                 }
             }

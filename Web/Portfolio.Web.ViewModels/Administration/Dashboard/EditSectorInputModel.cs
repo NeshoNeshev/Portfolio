@@ -11,11 +11,12 @@ namespace Portfolio.Web.ViewModels.Administration.Dashboard
     public class EditSectorInputModel : IMapFrom<Sector>
     {
 
-        [Required]
-        [DisplayName("Sector Name")]
-        public string SectorName { get; set; }
+        public string Id { get; set; }
 
         [Required]
+        [DisplayName("New Sector Name")]
         public string NewSectorName { get; set; }
+
+        public ICollection<SectorDropDownViewModel> SectorDropDown { get; set; }
     }
 }

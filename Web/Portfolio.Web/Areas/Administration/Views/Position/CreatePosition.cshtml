@@ -5,29 +5,31 @@
     this.ViewData["Title"] = "Create Position";
 
 }
+<div class="text-center">
+    <h1>@this.ViewData["Title"]</h1>
+</div>
 <form method="post" asp-action="CreatePosition">
     <section class="border border-primary">
         <div class="container">
-            <p class="align-content-center">Create Company</p>
             <div class="row" style="margin-bottom: 20px">
                
-                @*<div class="col-sm">
+                <div class="col-md-4">
                     <label asp-for="SectorId" class="text-primary"></label>
-                    <select asp-for="SectorId" asp-items="Model.OrganizationDrop.SelectMany(x=>x.Sectors).Select(x=>new SelectListItem(x.SectorName, x.Id))"></select>
+                    <select asp-for="SectorId" asp-items="Model.SectorDropDown.Select(x=> new SelectListItem(x.SectorName,x.Id))" class="form-control"></select>
                     <span asp-validation-for="SectorId" class="text-danger"></span>
-                </div>*@
-                <div class="col-sm">
+                </div>
+                <div class="col-md-4">
 
                     <label asp-for="PositionName" class="text-primary"></label>
                     <input asp-for="PositionName" class="form-control" />
                     <span asp-validation-for="PositionName" class="text-danger"></span>
                 </div>
-                <div class="col-sm">
+                <div class="col-md-4">
                     <label asp-for="PositionPeriod" class="text-primary"></label>
                     <input asp-for="PositionPeriod" class="form-control" />
                     <span asp-validation-for="PositionPeriod" class="text-danger"></span>
                 </div>
-                <div class="col-sm">
+                <div class="col-md-4">
                     <label asp-for="MoreInformation" class="text-primary"></label>
                     <input asp-for="MoreInformation" class="form-control" />
                     <span asp-validation-for="MoreInformation" class="text-danger"></span>

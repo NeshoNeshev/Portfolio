@@ -1,7 +1,7 @@
 ﻿@model Portfolio.Web.ViewModels.Administration.Dashboard.EditSectorInputModel
 
 @{
-    this.ViewData["Title"] = "Edit Category";
+    this.ViewData["Title"] = "Edit Sector";
 }
 
 <div class="text-center">
@@ -11,14 +11,13 @@
 <form method="post" asp-action="Edit">
     <section class="border border-primary">
         <div class="container">
-            <p class="align-content-center">Create Company</p>
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-sm">
-                    <label asp-for="SectorName" class="text-primary"></label>
-                    <input asp-for="SectorName" class="form-control" />
-                    <span asp-validation-for="SectorName" class="text-danger"></span>
+                <div class="col-md-4">
+                    <label asp-for="Id" class="text-primary"></label>
+                    <select asp-for="Id" asp-items="Model.SectorDropDown.Select(x=>new SelectListItem(x.SectorName, x.Id))" class="form-control"></select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
-                <div class="col-sm">
+                <div class="col-md-4">
                     <label asp-for="NewSectorName" class="text-primary"></label>
                     <input asp-for="NewSectorName" class="form-control" />
                     <span asp-validation-for="NewSectorName" class="text-danger"></span>

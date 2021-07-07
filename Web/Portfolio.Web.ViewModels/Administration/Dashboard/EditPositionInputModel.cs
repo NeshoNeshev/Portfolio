@@ -8,11 +8,16 @@ using Portfolio.Services.Mapping;
 
 namespace Portfolio.Web.ViewModels.Administration.Dashboard
 {
-    public class EditPositionInputModel : IMapFrom<Position>
+    public class EditPositionInputModel 
     {
+
         [Required]
-        [DisplayName("Position Name")]
-        public string PositionName { get; set; }
+        [DisplayName("Positions")]
+        public string Id { get; set; }
+
+        [Required]
+        [DisplayName("New Position Name")]
+        public string NewPositionName { get; set; }
 
         [Required]
         [DisplayName("MoreInformation")]
@@ -21,5 +26,8 @@ namespace Portfolio.Web.ViewModels.Administration.Dashboard
         [Required]
         [DisplayName("Period")]
         public string Period { get; set; }
+
+        [DisplayName("PositionName")]
+        public ICollection<PositionDropDownViewModel> DropDownModel { get; set; }
     }
 }
