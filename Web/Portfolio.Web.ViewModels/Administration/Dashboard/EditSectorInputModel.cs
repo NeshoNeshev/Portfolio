@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Portfolio.Data.Models;
-using Portfolio.Services.Mapping;
-
-namespace Portfolio.Web.ViewModels.Administration.Dashboard
+﻿namespace Portfolio.Web.ViewModels.Administration.Dashboard
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+
     public class EditSectorInputModel : IMapFrom<Sector>
     {
 

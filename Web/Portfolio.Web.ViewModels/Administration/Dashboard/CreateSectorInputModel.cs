@@ -3,6 +3,7 @@ using Portfolio.Services.Mapping;
 
 namespace Portfolio.Web.ViewModels.Administration.Dashboard
 {
+    using Portfolio.Web.Areas.Administration.Views.Organization;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;

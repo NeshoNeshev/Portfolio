@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Portfolio.Web.Areas.Administration.Views.Organization;
+using Portfolio.Web.ViewModels.Administration.Organization;
 
 namespace Portfolio.Services.Data
 {
@@ -94,6 +95,18 @@ namespace Portfolio.Services.Data
             organization.Country = country;
 
             await this.organizationRepository.AddAsync(organization);
+            await this.organizationRepository.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(EditOrganizationInputModel input)
+        {
+            var organization = this.organizationRepository
+                .All()
+                .FirstOrDefault(x => x.Id == input.Id);
+
+            organization.OrganizationName = input.NewOrganizationName;
+            organization.CompanySize = input.NewCompanySize;
+            this.organizationRepository.Update(organization);
             await this.organizationRepository.SaveChangesAsync();
         }
 

@@ -1,28 +1,38 @@
-﻿@model Portfolio.Web.ViewModels.Administration.Dashboard.CreateSectorInputModel
+﻿@using Portfolio.Common
+@model Portfolio.Web.ViewModels.Administration.Organization.EditOrganizationInputModel
 @{
-    ViewData["Title"] = "Create Sector";
+    this.ViewData["Title"] = "Edit Organization";
 }
+
 <div class="text-center">
     <h1 class="text-primary">@this.ViewData["Title"]</h1>
 </div>
-<form method="post" asp-action="CreateSector">
+
+@if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+{
+<form method="post" asp-action="Edit">
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-4">
-                    <label asp-for="SectorName" class="text-primary"></label>
-                    <input asp-for="SectorName" class="form-control" />
-                    <span asp-validation-for="SectorName" class="text-danger"></span>
+                    <label asp-for="Id" class="text-primary"></label>
+                    <select asp-for="Id" asp-items="Model.OrganizaztionDropDown.Select(x=>new SelectListItem(x.OrganizationName, x.Id))" class="form-control"></select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
-                    <label asp-for="OrganizationId" class="text-primary"></label>
-                    <select asp-for="OrganizationId" asp-items="Model.OrganizationDropDown.Select(x=> new SelectListItem(x.OrganizationName,x.Id))" class="form-control"></select>
-                    <span asp-validation-for="OrganizationId" class="text-danger"></span>
+                    <label asp-for="NewOrganizationName" class="text-primary"></label>
+                    <input asp-for="NewOrganizationName" class="form-control" />
+                    <span asp-validation-for="NewOrganizationName" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewCompanySize" class="text-primary"></label>
+                    <input asp-for="NewCompanySize" class="form-control" />
+                    <span asp-validation-for="NewCompanySize" class="text-danger"></span>
                 </div>
             </div>
         </div>
     </section>
-    <br />
+    <br/>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
         Save
     </button>
@@ -37,7 +47,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -47,3 +57,9 @@
         </div>
     </div>
 </form>
+    
+}
+
+
+
+<hr />

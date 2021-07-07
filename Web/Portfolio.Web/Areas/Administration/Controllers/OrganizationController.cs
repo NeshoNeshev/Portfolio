@@ -1,14 +1,17 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Portfolio.Data.Common.Repositories;
-using Portfolio.Data.Models;
-using Portfolio.Services.Data;
-using Portfolio.Web.ViewModels.Administration.Dashboard;
-
-namespace Portfolio.Web.Areas.Administration.Controllers
+﻿namespace Portfolio.Web.Areas.Administration.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Portfolio.Data.Common.Repositories;
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Data;
+    using Portfolio.Web.Areas.Administration.Views.Organization;
+    using Portfolio.Web.ViewModels.Administration.Dashboard;
+    using Portfolio.Web.ViewModels.Administration.Organization;
+
     public class OrganizationController : AdministrationController
     {
         private readonly IDeletableEntityRepository<Organization> organizationRepository;
@@ -61,12 +64,33 @@ namespace Portfolio.Web.Areas.Administration.Controllers
                         $"Not Found {input.PrivateName}");
                     return this.View(input);
                 }
-
-
             }
 
             await this.organizationServices.CreateAsync(input);
             return this.View(input);
+        }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            var organizations = this.organizationServices.GetAll<OrganizationDropDownViewModel>().ToList();
+            var viewModel = new EditOrganizationInputModel();
+            viewModel.OrganizaztionDropDown = organizations;
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(EditOrganizationInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.organizationServices.UpdateAsync(model);
+
+            return this.Json("Sucsess");
         }
     }
 }

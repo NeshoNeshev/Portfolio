@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Web.Areas.Administration.Controllers
+﻿using Portfolio.Web.Areas.Administration.Views.Organization;
+
+namespace Portfolio.Web.Areas.Administration.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
