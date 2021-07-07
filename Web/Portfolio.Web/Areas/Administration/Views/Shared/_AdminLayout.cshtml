@@ -11,63 +11,146 @@
     <link rel="stylesheet" href="~/boxicons/css/boxicons.css" />
 </head>
 <body>
-      
-<header>
-    <div></div>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a  style="color: #0563bb" class="navbar-brand" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Index</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Organization" asp-action="CreateOrganization">CreateOrganization</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="University" asp-action="CreateUniversity">CreateUniversity</a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Sector" asp-action="CreateSector">Create Sector</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Position" asp-action="CreatePosition">Create Position</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Sector" asp-action="Edit">Edit Sector</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Position" asp-action="Edit">Edit Position</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Organization" asp-action="Edit">Edit Organization</a>
-                    </li>
-                </ul>
+    <header>
+        <div></div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a style="color: #0563bb" class="navbar-brand" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Index</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav mx-auto">
+
+
+
+
+
+                        <li class="nav-item">
+                            <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Organization" asp-action="Edit">Edit Organization</a>
+                        </li>
+
+                        @*<li class="nav-item">
+                                <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Specialty" asp-action="Edit">Edit Speciality</a>
+
+                            </li>*@
+                        <li class="nav-item">
+                            <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Specialty" asp-action="CreateSpecialty">Create Speciality</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container box-shadow mb-3 justify-content-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Organization
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Organization" asp-action="CreateOrganization">CreateOrganization</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Organization" asp-action="Edit">Edit Organization</a>
+                </li>
+            </div>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="University" asp-action="CreateUniversity">CreateUniversity</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="University" asp-action="Edit">Edit University</a>
+                </li>
             </div>
         </div>
-    </nav>
-</header>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                University
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="University" asp-action="CreateUniversity">CreateUniversity</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="University" asp-action="Edit">Edit University</a>
+                </li>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sector
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Sector" asp-action="CreateSector">Create Sector</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Sector" asp-action="Edit">Edit Sector</a>
+                </li>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sector
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Position" asp-action="CreatePosition">Create Position</a>
+                </li>
 
-<div class="container box-shadow mb-3">
-    <main role="main" class="pb-3">
-        @this.RenderBody()
-    </main>
-</div>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Position" asp-action="Edit">Edit Position</a>
+                </li>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sector
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Specialty" asp-action="Edit">Edit Speciality</a>
 
-<footer class="border-top footer text-muted">
-    &copy; 2021. All Rights Reserved Designed by <a href="" target="_blank"><span>Nesho Neshev</span></a>
-    <button onclick="topFunction()" id="topButton" class="btn btn-primary btn-sm">Top</button>
-    <a href="@GlobalConstants.Facebook" target="_blank" class="facebook" style="float: right"><i class="bx bxl-facebook"></i></a>
-    <a href="@GlobalConstants.Github" target="_blank" class="github" style="float: right"><i class="bx bxl-github"></i></a>
-    <a href="@GlobalConstants.LinkedIn" target="_blank" class="linkedin" style="float: right"><i class="bx bxl-linkedin"></i></a>
-</footer>
-<script src="typed.js/typed.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await this.RenderSectionAsync("Scripts", required: false)
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Specialty" asp-action="CreateSpecialty">Create Speciality</a>
+                </li>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sector
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Course" asp-action="Edit">Edit Course</a>
+
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Course" asp-action="CreateCourse">Create Course</a>
+                </li>
+            </div>
+        </div>
+        <main role="main" class="pb-3">
+            @this.RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        &copy; 2021. All Rights Reserved Designed by <a href="" target="_blank"><span>Nesho Neshev</span></a>
+        <button onclick="topFunction()" id="topButton" class="btn btn-primary btn-sm">Top</button>
+        <a href="@GlobalConstants.Facebook" target="_blank" class="facebook" style="float: right"><i class="bx bxl-facebook"></i></a>
+        <a href="@GlobalConstants.Github" target="_blank" class="github" style="float: right"><i class="bx bxl-github"></i></a>
+        <a href="@GlobalConstants.LinkedIn" target="_blank" class="linkedin" style="float: right"><i class="bx bxl-linkedin"></i></a>
+    </footer>
+    <script src="typed.js/typed.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,61 @@
+﻿@model Portfolio.Web.ViewModels.Administration.Course.EditCourseInputModel
+@{
+    this.ViewData["Title"] = "Edit Course";
+}
+
+<div class="text-center">
+    <h1 class="text-primary">@this.ViewData["Title"]</h1>
+</div>
+
+<form method="post" asp-action="Edit">
+    <section class="border border-primary">
+        <div class="container">
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4">
+                    <label asp-for="Id" class="text-primary"></label>
+                    <select asp-for="Id" asp-items="Model.CourseDropDowns.Select(x=>new SelectListItem(x.CourseName, x.Id))" class="form-control"></select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewCourseName" class="text-primary"></label>
+                    <input asp-for="NewCourseName" class="form-control" />
+                    <span asp-validation-for="NewCourseName" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewDescription" class="text-primary"></label>
+                    <input asp-for="NewDescription" class="form-control" />
+                    <span asp-validation-for="NewDescription" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Date" class="text-primary"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+        Save
+    </button>
+
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Do you want to save these changes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

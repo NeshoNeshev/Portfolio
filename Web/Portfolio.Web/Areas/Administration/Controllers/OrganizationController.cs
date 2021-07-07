@@ -45,7 +45,6 @@
             }
             else
             {
-
                 var organizationName = this.organizationRepository.All()
                     .Any(x => x.OrganizationName == input.OrganizationName);
                 var privateName = this.privateInformation.All().Any(x => x.FirstName == input.PrivateName);

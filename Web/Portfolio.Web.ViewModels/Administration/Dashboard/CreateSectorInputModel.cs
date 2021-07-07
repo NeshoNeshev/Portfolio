@@ -1,12 +1,12 @@
-﻿using Portfolio.Data.Models;
-using Portfolio.Services.Mapping;
-
-namespace Portfolio.Web.ViewModels.Administration.Dashboard
+﻿namespace Portfolio.Web.ViewModels.Administration.Dashboard
 {
-    using Portfolio.Web.Areas.Administration.Views.Organization;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+    using Portfolio.Web.Areas.Administration.Views.Organization;
 
     public class CreateSectorInputModel : IMapFrom<Sector>
     {

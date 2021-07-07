@@ -7,42 +7,31 @@
 
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
+    using Portfolio.Web.ViewModels.Administration.University;
 
     public class CreateUniversityService : ICreateUniversityService
     {
         private readonly IDeletableEntityRepository<University> universityRepository;
-        private readonly IDeletableEntityRepository<Course> _couorsEntityRepository;
-        private readonly IDeletableEntityRepository<Specialty> _specialityRepository;
         private readonly IDeletableEntityRepository<Country> countryRepository;
         private readonly IDeletableEntityRepository<PrivateInformation> privatEntityRepository;
-        private readonly IChangeInputToUpper<CreateUniversityInputModel> changeInputToUpper;
         private readonly ICreateCountryService createCountry;
         private readonly ICreateTownService townService;
-        private readonly ICreateSpecialtiesService _specialtiesService;
-        private readonly ICreateCourseService _courseService;
 
         public CreateUniversityService(IDeletableEntityRepository<University> universityRepository,
-            IDeletableEntityRepository<Course> couorsEntityRepository,
-            IDeletableEntityRepository<Specialty> specialityRepository,
+
             IDeletableEntityRepository<Country> countryRepository,
             IDeletableEntityRepository<PrivateInformation> privatEntityRepository,
-            IChangeInputToUpper<CreateUniversityInputModel> changeInputToUpper,
             ICreateCountryService createCountry,
             ICreateTownService townService,
-            ICreateSpecialtiesService specialtiesService,
             ICreateCourseService courseService)
         {
             this.universityRepository = universityRepository;
-            _couorsEntityRepository = couorsEntityRepository;
-            _specialityRepository = specialityRepository;
             this.countryRepository = countryRepository;
             this.privatEntityRepository = privatEntityRepository;
-            this.changeInputToUpper = changeInputToUpper;
             this.createCountry = createCountry;
             this.townService = townService;
-            _specialtiesService = specialtiesService;
-            _courseService = courseService;
         }
 
         public async Task CreateAsync(CreateUniversityInputModel model)
@@ -59,9 +48,6 @@
                 return;
             }
 
-            //List<string> forbidden = new List<string>() { model.CourseDescription, model.CertificateDescription, model.CertificateLink };
-            //this.changeInputToUpper.ToUpper(model, forbidden);
-
             var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == model.CountryName);
 
             if (country == null)
@@ -76,43 +62,48 @@
                     await this.townService.CreateAsync(model.TownName, model.CountryName);
                 }
             }
+
             var university = new University
             {
                 Id = Guid.NewGuid().ToString(),
                 UniversityName = model.UniversityName,
                 Period = model.PeriodInUniversity,
+                PrivateInformation = privateInformation,
+                Country = country,
             };
-            university.PrivateInformation = privateInformation;
-            university.Country = country;
 
             await this.universityRepository.AddAsync(university);
             await this.universityRepository.SaveChangesAsync();
-
-            var specialty = this._specialityRepository.All().FirstOrDefault(x => x.SpecialtyName == model.SpecialityName);
-            var course = this._couorsEntityRepository.All().FirstOrDefault(x => x.CourseName == model.CourseName);
-
-            if (specialty == null)
-            {
-
-                await this._specialtiesService.CreateAsync(model.SpecialityName, model.SpecialityDegree, model.UniversityName);
-                var spec = this._specialityRepository.All()
-                    .FirstOrDefault(x => x.SpecialtyName == model.SpecialityName);
-                if (!spec.Courses.Contains(course))
-                {
-                    await this._courseService.CreateAsync(model.CourseName, model.CourseDescription, model.CourseDate, model.CertificateName, model.CertificateDate, model.CertificateDescription, model.CertificateLink,model.SpecialityName);
-                    spec.Courses.Add(course);
-                }
-            }
-            else
-            {
-                if (course == null)
-                {
-                    await this._courseService.CreateAsync(model.CourseName, model.CourseDescription, model.CourseDate, model.CertificateName, model.CertificateDate, model.CertificateDescription, model.CertificateLink, model.SpecialityName);
-                }
-
-                specialty.Courses.Add(course);
-                university.Specialties.Add(specialty);
-            }
         }
+
+        public async Task UpdateAsync(EditUniversityInputModel input)
+        {
+            var university = this.universityRepository
+                .All()
+                .FirstOrDefault(x => x.Id == input.Id);
+            university.UniversityName = input.NewUniversityName;
+
+            this.universityRepository.Update(university);
+            await this.universityRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll<T>(int? count = null)
+        {
+            IQueryable<University> query = this.universityRepository.All().OrderBy(x => x.UniversityName);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return query.To<T>().ToList();
+        }
+
+        public bool FindByNameAsync(string name) => this.universityRepository
+            .All()
+            .Any(s => s.UniversityName == name);
+
+        public bool FindByIdAsync(string id) => this.universityRepository
+            .All()
+            .Any(x => x.Id == id);
     }
 }

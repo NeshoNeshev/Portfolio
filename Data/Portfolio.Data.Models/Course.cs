@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace Portfolio.Data.Models
+﻿namespace Portfolio.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Portfolio.Data.Common.Models;
@@ -13,6 +11,7 @@ namespace Portfolio.Data.Models
         {
             this.Certificates = new HashSet<Certificate>();
         }
+
         public string CourseName { get; set; }
 
         public string Description { get; set; }
@@ -22,6 +21,7 @@ namespace Portfolio.Data.Models
         public string SpecialtyId { get; set; }
 
         public Specialty Specialty { get; set; }
+
         public virtual ICollection<Certificate> Certificates { get; set; }
     }
 }

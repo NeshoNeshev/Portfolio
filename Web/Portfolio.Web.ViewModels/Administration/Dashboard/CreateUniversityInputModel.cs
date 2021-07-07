@@ -27,40 +27,5 @@
         [Display(Name = "Town Name")]
         [RegularExpression("^[A-Z][a-z]*$")]
         public string TownName { get; set; }
-
-        [Required]
-        [Display(Name = "Speciality Name")]
-        [RegularExpression("^[A-Z][a-z]*$")]
-        public string SpecialityName { get; set; }
-
-        [Required]
-        [Display(Name = "Speciality Degree")]
-        [RegularExpression("^[A-Z][a-z]*$")]
-        public string SpecialityDegree { get; set; }
-
-        [Required]
-        [Display(Name = "Course Name")]
-        [RegularExpression("^[A-Z][a-z]*$")]
-        public string CourseName { get; set; }
-
-        [Required]
-        [Display(Name = "Course Description")]
-        public string CourseDescription { get; set; }
-
-        [Required]
-        [Display(Name = "Course Date")]
-        public string CourseDate{ get; set; }
-
-        [Display(Name = "Certificate Name")]
-        public string CertificateName { get; set; }
-
-        [Display(Name = "Certificate Description")]
-        public string CertificateDescription { get; set; }
-
-        [Display(Name = "Certificate Date")]
-        public string CertificateDate { get; set; }
-
-        [Display(Name = "Certificate Link")]
-        public string CertificateLink{ get; set; }
     }
 }

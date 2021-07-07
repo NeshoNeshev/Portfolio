@@ -6,7 +6,10 @@
 
     public class University : BaseDeletableModel<string>
     {
-
+        public University()
+        {
+            this.Specialties = new HashSet<Specialty>();
+        }
         public string UniversityName { get; set; }
 
         public string Period { get; set; }

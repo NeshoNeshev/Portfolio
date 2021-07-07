@@ -129,6 +129,5 @@ namespace Portfolio.Services.Data
         public bool FindByIdAsync(string id) => this.organizationRepository
             .All()
             .Any(x => x.Id == id);
-
     }
 }

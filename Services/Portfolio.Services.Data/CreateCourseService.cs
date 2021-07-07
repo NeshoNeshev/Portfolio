@@ -1,39 +1,32 @@
 ﻿namespace Portfolio.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+    using Portfolio.Web.ViewModels.Administration.Course;
 
     public class CreateCourseService : ICreateCourseService
     {
-        private readonly IDeletableEntityRepository<Certificate> certificateRepository;
         private readonly IDeletableEntityRepository<Specialty> specialityRepository;
         private readonly IDeletableEntityRepository<Course> courseRepository;
-        private readonly ICreateCertificatesService certificatesService;
 
-        public CreateCourseService(IDeletableEntityRepository<Certificate> certificateRepository,
-            IDeletableEntityRepository<Specialty>specialityRepository,
-            IDeletableEntityRepository<Course> courseRepository,
-            ICreateCertificatesService certificatesService)
+        public CreateCourseService(IDeletableEntityRepository<Specialty> specialityRepository,
+            IDeletableEntityRepository<Course> courseRepository
+           )
         {
-            this.certificateRepository = certificateRepository;
             this.specialityRepository = specialityRepository;
             this.courseRepository = courseRepository;
-            this.certificatesService = certificatesService;
         }
 
-
-        public async Task CreateAsync(string courseName, string courseDescription, string date, string certificateName, string certificateDate, string certificateDescription, string certificateLInk, string specialityName)
+        public async Task CreateAsync(CourseInputModel model)
         {
-            string item = "default";
 
-            var certificate = this.certificateRepository.All()
-                .FirstOrDefault(x => x.CertificateName == certificateName);
-
-            var specialty = this.specialityRepository.All().FirstOrDefault(x => x.SpecialtyName == specialityName);
+            var specialty = this.specialityRepository.All().FirstOrDefault(x => x.Id == model.SpecialityId);
             if (specialty == null)
             {
                 return;
@@ -42,9 +35,9 @@
             var course = new Course
             {
                 Id = Guid.NewGuid().ToString(),
-                CourseName = courseName,
-                Description = courseDescription,
-                Date = date,
+                CourseName = model.CourseName,
+                Description = model.Description,
+                Date = model.Date,
                 Specialty = specialty,
             };
             await this.courseRepository.AddAsync(course);
@@ -53,11 +46,39 @@
             {
                 return;
             }
+        }
 
-            if (certificate == null)
+        public IEnumerable<T> GetAll<T>(int? count = null)
+        {
+            IQueryable<Course> query = this.courseRepository.All().OrderBy(x => x.CourseName);
+            if (count.HasValue)
             {
-                await this.certificatesService.CreateAsync(certificateName, certificateLInk, certificateDescription, certificateDate, courseName);
+                query = query.Take(count.Value);
             }
+
+            return query.To<T>().ToList();
+        }
+
+        public bool FindByNameAsync(string name)
+            => this.courseRepository
+                .All()
+                .Any(s => s.CourseName == name);
+
+        public bool FindByIdAsync(string id) => this.courseRepository
+            .All()
+            .Any(x => x.Id == id);
+
+        public async Task UpdateAsync(EditCourseInputModel input)
+        {
+            var course = this.courseRepository
+                .All()
+                .FirstOrDefault(x => x.Id == input.Id);
+
+            course.CourseName = input.NewCourseName;
+            course.Description = input.NewDescription;
+            course.Date = input.Date;
+            this.courseRepository.Update(course);
+            await this.courseRepository.SaveChangesAsync();
         }
     }
 }

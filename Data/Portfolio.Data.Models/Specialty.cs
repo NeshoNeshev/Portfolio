@@ -11,6 +11,7 @@ namespace Portfolio.Data.Models
         {
             this.Courses = new HashSet<Course>();
         }
+
         public string SpecialtyName { get; set; }
 
         public string Degree { get; set; }
