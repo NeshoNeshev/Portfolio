@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Services.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Portfolio.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -89,7 +91,7 @@
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<University> query = this.universityRepository.All().OrderBy(x => x.UniversityName);
+            IQueryable<University> query = this.universityRepository.All().OrderBy(x => x.UniversityName).Include(x=>x.Specialties).ThenInclude(x=>x.Courses).ThenInclude(x=>x.Certificates);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
