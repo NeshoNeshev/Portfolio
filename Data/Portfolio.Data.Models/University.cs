@@ -10,6 +10,7 @@
         {
             this.Specialties = new HashSet<Specialty>();
         }
+
         public string UniversityName { get; set; }
 
         public string Period { get; set; }
@@ -23,7 +24,5 @@
         public PrivateInformation PrivateInformation { get; set; }
 
         public virtual ICollection<Specialty> Specialties { get; set; }
-
-        
     }
 }

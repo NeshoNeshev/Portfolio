@@ -1,0 +1,66 @@
+﻿@model Portfolio.Web.ViewModels.Administration.Certificate.EditCertificateInputModel
+@{
+    this.ViewData["Title"] = "Edit Certificate";
+}
+
+<div class="text-center">
+    <h1 class="text-primary">@this.ViewData["Title"]</h1>
+</div>
+
+<form method="post" asp-action="EditCertificate">
+    <section class="border border-primary">
+        <div class="container">
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4">
+                    <label asp-for="Id" class="text-primary"></label>
+                    <select asp-for="Id" asp-items="Model.CertificateDropDowns.Select(x=>new SelectListItem(x.CertificateName, x.Id))" class="form-control"></select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewCertificateName" class="text-primary"></label>
+                    <input asp-for="NewCertificateName" class="form-control" />
+                    <span asp-validation-for="NewCertificateName" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewDescription" class="text-primary"></label>
+                    <input asp-for="NewDescription" class="form-control" />
+                    <span asp-validation-for="NewDescription" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewDate" class="text-primary"></label>
+                    <input asp-for="NewDate" class="form-control" />
+                    <span asp-validation-for="NewDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="NewLink" class="text-primary"></label>
+                    <input asp-for="NewLink" class="form-control" />
+                    <span asp-validation-for="NewLink" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+        Save
+    </button>
+
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Do you want to save these changes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

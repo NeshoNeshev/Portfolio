@@ -1,41 +1,77 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Portfolio.Data.Common.Repositories;
-using Portfolio.Data.Models;
-
-namespace Portfolio.Services.Data
+﻿namespace Portfolio.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Portfolio.Data.Common.Repositories;
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+    using Portfolio.Web.ViewModels.Administration.Certificate;
+
     public class CreateCertificatesService : ICreateCertificatesService
     {
         private readonly IDeletableEntityRepository<Certificate> certificateRepository;
         private readonly IDeletableEntityRepository<Course> courseRepository;
 
-        public CreateCertificatesService(IDeletableEntityRepository<Certificate> certificateRepository,IDeletableEntityRepository<Course>course)
+        public CreateCertificatesService(IDeletableEntityRepository<Certificate> certificateRepository,IDeletableEntityRepository<Course>courseRepository)
         {
             this.certificateRepository = certificateRepository;
-            course = course;
+            this.courseRepository = courseRepository;
         }
 
-        public async Task CreateAsync(string certificateName, string link, string description, string date, string cName)
+        public async Task CreateAsync(CertificateInputModel model)
         {
-            var exist = this.certificateRepository.All().Any(x => x.CertificateName == certificateName);
-            if (exist)
+            var course = this.courseRepository.All().FirstOrDefault(x => x.Id == model.CourseId);
+            if (course == null)
             {
                 return;
             }
 
-            var course = this.courseRepository.All().FirstOrDefault(x => x.CourseName == cName);
             var certificate = new Certificate
             {
                 Id = Guid.NewGuid().ToString(),
-                CertificateName = certificateName,
-                Link = link,
-                Description = description,
-                Date = date,
+                CertificateName = model.CertificateName,
+                Link = model.Link,
+                Description = model.Description,
+                Date = model.Date,
             };
             certificate.Course = course;
             await this.certificateRepository.AddAsync(certificate);
+            await this.certificateRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll<T>(int? count = null)
+        {
+            IQueryable<Certificate> query = this.certificateRepository.All().OrderBy(x => x.CertificateName);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return query.To<T>().ToList();
+        }
+
+        public bool FindByNameAsync(string name)
+            => this.certificateRepository
+                .All()
+                .Any(s => s.CertificateName == name);
+
+        public bool FindByIdAsync(string id) => this.certificateRepository
+            .All()
+            .Any(x => x.Id == id);
+
+        public async Task UpdateAsync(EditCertificateInputModel input)
+        {
+            var certificate = this.certificateRepository
+                .All()
+                .FirstOrDefault(x => x.Id == input.Id);
+            certificate.CertificateName = input.NewCertificateName;
+            certificate.Description = input.NewDescription;
+            certificate.Date = input.NewDate;
+            certificate.Link = input.NewLink;
+            this.certificateRepository.Update(certificate);
             await this.certificateRepository.SaveChangesAsync();
         }
     }

@@ -11,6 +11,7 @@
         {
             this.Organization = new HashSet<Organization>();
             this.Universities = new HashSet<University>();
+            this.ApplicationUsers = new HashSet<ApplicationUser>();
         }
 
         public string FirstName { get; set; }

@@ -1,12 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Portfolio.Services.Data
+﻿namespace Portfolio.Services.Data
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using Portfolio.Web.ViewModels.Administration.Certificate;
+
     public interface ICreateCertificatesService
     {
-        Task CreateAsync(string name, string link, string description, string date, string cName );
+        Task CreateAsync(CertificateInputModel model);
+
+        public IEnumerable<T> GetAll<T>(int? count = null);
+
+
+        public bool FindByNameAsync(string name);
+
+
+        public bool FindByIdAsync(string id);
+
+        public Task UpdateAsync(EditCertificateInputModel input);
     }
 }

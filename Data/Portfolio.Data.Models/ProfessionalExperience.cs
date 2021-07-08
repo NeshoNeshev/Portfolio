@@ -10,7 +10,7 @@
         {
             this.Organizations = new HashSet<Organization>();
         }
-        
+
         public string Period { get; set; }
 
         public string PrivateInformationId { get; set; }

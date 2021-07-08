@@ -10,6 +10,7 @@
         {
             this.Towns = new HashSet<Town>();
             this.Organizations = new HashSet<Organization>();
+            this.Universities = new HashSet<University>();
         }
 
         public string CountryName { get; set; }
