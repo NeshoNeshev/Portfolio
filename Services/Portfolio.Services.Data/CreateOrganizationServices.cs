@@ -57,7 +57,6 @@ namespace Portfolio.Services.Data
 
         public async Task CreateAsync(OrganizationInputModel input)
         {
-
             var organizationExist = this.organizationRepository.All().Any(x => x.OrganizationName == input.OrganizationName);
             if (organizationExist)
             {

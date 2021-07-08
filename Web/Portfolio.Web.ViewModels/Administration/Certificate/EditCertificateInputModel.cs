@@ -12,7 +12,6 @@
         [DisplayName("New Certificate Name")]
         public string NewCertificateName { get; set; }
 
-        [Required]
         [DisplayName("New Description")]
         public string NewDescription { get; set; }
 

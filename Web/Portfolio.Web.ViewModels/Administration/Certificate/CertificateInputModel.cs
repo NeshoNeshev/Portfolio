@@ -19,7 +19,7 @@
         [DisplayName("Link")]
         public string Link { get; set; }
 
-        [Required]
+
         [DisplayName("Description")]
         public string Description { get; set; }
 
