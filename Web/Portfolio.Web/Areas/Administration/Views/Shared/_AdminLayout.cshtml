@@ -140,6 +140,19 @@
                 </li>
             </div>
         </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Certificate
+            </button>
+            <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Project" asp-action="CreateProject">Create Project</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Project" asp-action="Edit">Edit Project</a>
+                </li>
+            </div>
+        </div>
         <main role="main" class="pb-3">
             @this.RenderBody()
         </main>

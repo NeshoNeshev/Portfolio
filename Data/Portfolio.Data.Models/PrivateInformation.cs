@@ -12,6 +12,7 @@
             this.Organization = new HashSet<Organization>();
             this.Universities = new HashSet<University>();
             this.ApplicationUsers = new HashSet<ApplicationUser>();
+            this.Projects = new HashSet<Project>();
         }
 
         public string FirstName { get; set; }
@@ -35,5 +36,7 @@
         public virtual ICollection<Organization> Organization { get; set; }
 
         public virtual ICollection<University> Universities { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

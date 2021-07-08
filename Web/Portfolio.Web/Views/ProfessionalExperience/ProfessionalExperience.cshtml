@@ -1,0 +1,51 @@
+﻿@using Portfolio.Common
+@using Portfolio.Data.Models
+@model Portfolio.Web.ViewModels.ProfessionalExperienceViewModels.AllProfessionalExperience
+@{
+    ViewData["Title"] = "ProfessionalExperience page";
+}
+
+<section id="professional" class="professional">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2 class="headertekst">Professional Experience</h2>
+            <a href="@GlobalConstants.Facebook" target="_blank"><i class="bx bxl-facebook" style="font-size: 1.5em;"></i></a>
+            <a href="@GlobalConstants.Github" target="_blank"><i class="bx bxl-github" style="font-size: 1.5em;"></i></a>
+            <a href="@GlobalConstants.LinkedIn" target="_blank"><i class="bx bxl-linkedin" style="font-size: 1.5em;"></i></a>
+        </div>
+
+        <div class="row">
+
+            @foreach (var item in Model.ProfessionalExperienceViewModels)
+            {
+
+                <div class="col-lg-6">
+                    <h3 class="professional-title">@item.OrganizationName</h3>
+                    <div class="professional-item pb-0">
+                        @foreach (var sector in item.Sectors)
+                        {
+
+                            <h4>@sector.SectorName</h4>
+                            @foreach (var position in sector.Positions)
+                            {
+                                <h5>@position.PositionName</h5>
+                                <p><em>@position.Period</em></p>
+                                <ul>
+                                    <li> <strong>Town: </strong>@item.CountryCountryName</li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>Sector: </strong>@position.MoreInformation</li>
+                                    <li><i class="bi bi-chevron-right"></i> <strong>CompanySize: </strong>@item.CompanySize</li>
+                                </ul>
+                            }
+
+                        }
+
+                    </div>
+                </div>
+
+
+            }
+
+        </div>
+    </div>
+</section>

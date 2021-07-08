@@ -44,6 +44,8 @@
 
         public DbSet<PrivateInformation> PrivateInformations { get; set; }
 
+        public DbSet<Project> Projects { get; set; }
+
 
         public override int SaveChanges() => this.SaveChanges(true);
 

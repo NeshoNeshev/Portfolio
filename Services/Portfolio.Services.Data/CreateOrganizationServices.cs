@@ -1,4 +1,5 @@
-﻿using Portfolio.Web.Areas.Administration.Views.Organization;
+﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Web.Areas.Administration.Views.Organization;
 using Portfolio.Web.ViewModels.Administration.Organization;
 
 namespace Portfolio.Services.Data
@@ -111,7 +112,7 @@ namespace Portfolio.Services.Data
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<Organization> query = this.organizationRepository.All().OrderBy(x => x.OrganizationName);
+            IQueryable<Organization> query = this.organizationRepository.All().OrderBy(x => x.OrganizationName).Include(x=>x.Sectors).ThenInclude(x=>x.Positions);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
