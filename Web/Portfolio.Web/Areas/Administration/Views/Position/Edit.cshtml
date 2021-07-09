@@ -11,24 +11,29 @@
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label asp-for="Id" class="text-primary"></label>
-                    <select asp-for="Id" asp-items="Model.DropDownModel.Select(x=>new SelectListItem(x.PositionName, x.Id))" class="form-control"></select>
+                    <select asp-for="Id" class="form-control">
+                        @foreach (var item in Model.DropDownModel)
+                        {
+                            <option value="@item.Id">@item.PositionName</option>
+                        }
+                    </select>
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label asp-for="NewPositionName" class="text-primary"></label>
-                    <input asp-for="NewPositionName" class="form-control" />
+                    <input asp-for="NewPositionName" class="form-control" placeholder="New position name" />
                     <span asp-validation-for="NewPositionName" class="text-danger"></span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label asp-for="Period" class="text-primary"></label>
-                    <input asp-for="Period" class="form-control" />
+                    <input asp-for="Period" class="form-control" placeholder="New position period" />
                     <span asp-validation-for="Period" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
                     <label asp-for="MoreInformation" class="text-primary"></label>
-                    <input asp-for="MoreInformation" class="form-control" />
+                    <textarea asp-for="MoreInformation" rows="4" class="form-control" placeholder="Enter more information"></textarea>
                     <span asp-validation-for="MoreInformation" class="text-danger"></span>
                 </div>
             </div>

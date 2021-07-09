@@ -6,6 +6,7 @@
 
     public class EditCourseInputModel
     {
+        [DisplayName("Course")]
         public string Id { get; set; }
 
         [Required]

@@ -1,6 +1,4 @@
-﻿using Portfolio.Web.ViewModels.Administration.University;
-
-namespace Portfolio.Web.ViewModels.Administration.Speciality
+﻿namespace Portfolio.Web.ViewModels.Administration.Speciality
 {
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -8,10 +6,10 @@ namespace Portfolio.Web.ViewModels.Administration.Speciality
 
     using Portfolio.Data.Models;
     using Portfolio.Services.Mapping;
+    using Portfolio.Web.ViewModels.Administration.University;
 
     public class CreateSpecialtyInputModel : IMapFrom<Specialty>
     {
-        public string Id { get; set; }
 
         [Required]
         [DisplayName("Specialty Name")]
@@ -21,6 +19,8 @@ namespace Portfolio.Web.ViewModels.Administration.Speciality
         [DisplayName("Specialty Degree")]
         public string Degree { get; set; }
 
+        [Required]
+        [DisplayName("University")]
         public string UniversityId { get; set; }
 
         public ICollection<UniversityDropDownViewModel> UniversityDropDown { get; set; }

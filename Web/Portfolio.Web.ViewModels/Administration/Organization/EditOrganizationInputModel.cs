@@ -9,6 +9,7 @@
 
     public class EditOrganizationInputModel: IMapFrom<Data.Models.Organization>
     {
+        [DisplayName("Organization")]
         public string Id { get; set; }
 
         [Required]

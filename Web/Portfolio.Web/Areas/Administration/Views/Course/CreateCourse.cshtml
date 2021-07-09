@@ -9,25 +9,30 @@
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-4">
+                <div class="col-md-2">
+                    <label asp-for="SpecialityId" class="text-primary"></label>
+                    <select asp-for="SpecialityId" class="form-control">
+                        @foreach (var item in Model.SpecialtiesDropDowns)
+                        {
+                            <option value="@item.Id">@item.SpecialtyName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
+                </div>
+                <div class="col-md-2">
                     <label asp-for="CourseName" class="text-primary"></label>
-                    <input asp-for="CourseName" class="form-control" />
+                    <input asp-for="CourseName" class="form-control" placeholder="Enter course name" />
                     <span asp-validation-for="CourseName" class="text-danger"></span>
                 </div>
-                <div class="col-md-4">
-                    <label asp-for="Description" class="text-primary"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label asp-for="Date" class="text-primary"></label>
-                    <input asp-for="Date" class="form-control" />
+                    <input asp-for="Date" class="form-control" placeholder="Enter date" />
                     <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
-                    <label asp-for="SpecialityId" class="text-primary"></label>
-                    <select asp-for="SpecialityId" asp-items="Model.SpecialtiesDropDowns.Select(x=> new SelectListItem(x.SpecialtyName,x.Id))" class="form-control"></select>
-                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
+                    <label asp-for="Description" class="text-primary"></label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Enter new description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
         </div>

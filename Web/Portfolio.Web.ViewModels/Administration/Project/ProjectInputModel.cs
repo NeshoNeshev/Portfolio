@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Portfolio.Web.ViewModels.Administration.Project
+﻿namespace Portfolio.Web.ViewModels.Administration.Project
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ProjectInputModel
     {
         [Required]
@@ -17,7 +14,6 @@ namespace Portfolio.Web.ViewModels.Administration.Project
 
         [Required]
         [Display(Name = "Private Name")]
-        [RegularExpression("^[A-Z][a-z]*$")]
         public string PrivateName { get; set; }
     }
 }

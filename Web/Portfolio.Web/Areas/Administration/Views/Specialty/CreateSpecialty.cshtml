@@ -1,6 +1,6 @@
 ﻿@model Portfolio.Web.ViewModels.Administration.Speciality.CreateSpecialtyInputModel
 @{
-    ViewData["Title"] = "Create Speciality";
+    ViewData["Title"] = "Create Specialty";
 }
 <div class="text-center">
     <h1 class="text-primary">@this.ViewData["Title"]</h1>
@@ -10,20 +10,26 @@
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-4">
+                    <label asp-for="UniversityId" class="text-primary"></label>
+                    <select asp-for="UniversityId" class="form-control">
+                        @foreach (var item in Model.UniversityDropDown)
+                        {
+                            <option value="@item.Id">@item.UniversityName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="UniversityId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
                     <label asp-for="SpecialtyName" class="text-primary"></label>
-                    <input asp-for="SpecialtyName" class="form-control" />
+                    <input asp-for="SpecialtyName" class="form-control" placeholder="Enter name" />
                     <span asp-validation-for="SpecialtyName" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
                     <label asp-for="Degree" class="text-primary"></label>
-                    <input asp-for="Degree" class="form-control" />
+                    <input asp-for="Degree" class="form-control" placeholder="Enter degree" />
                     <span asp-validation-for="Degree" class="text-danger"></span>
                 </div>
-                <div class="col-md-4">
-                    <label asp-for="UniversityId" class="text-primary"></label>
-                    <select asp-for="UniversityId" asp-items="Model.UniversityDropDown.Select(x=> new SelectListItem(x.UniversityName,x.Id))" class="form-control"></select>
-                    <span asp-validation-for="UniversityId" class="text-danger"></span>
-                </div>
+
             </div>
         </div>
     </section>

@@ -9,7 +9,8 @@
 
     public class EditSectorInputModel : IMapFrom<Sector>
     {
-
+        [Required]
+        [DisplayName("Sector")]
         public string Id { get; set; }
 
         [Required]

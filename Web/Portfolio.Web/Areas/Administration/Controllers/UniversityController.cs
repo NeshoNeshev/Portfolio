@@ -1,5 +1,6 @@
 ﻿namespace Portfolio.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -13,66 +14,54 @@
 
     public class UniversityController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Town> townRepository;
-        private readonly IDeletableEntityRepository<PrivateInformation> _privateEntityRepository;
+
+        private readonly IDeletableEntityRepository<PrivateInformation> privateEntityRepository;
         private readonly IDeletableEntityRepository<University> universityRepository;
         private readonly ICreateUniversityService universityService;
+        private readonly IEnumerable<UniversityDropDownViewModel> universityDropDown;
 
-        public UniversityController(IDeletableEntityRepository<Town> townRepository, IDeletableEntityRepository<PrivateInformation> privateEntityRepository, IDeletableEntityRepository<University> universityRepository, ICreateUniversityService universityService)
+        public UniversityController(IDeletableEntityRepository<PrivateInformation> privateEntityRepository, IDeletableEntityRepository<University> universityRepository, ICreateUniversityService universityService)
         {
-            this.townRepository = townRepository;
-            this._privateEntityRepository = privateEntityRepository;
+            this.privateEntityRepository = privateEntityRepository;
             this.universityRepository = universityRepository;
             this.universityService = universityService;
+            this.universityDropDown = this.universityService.GetAll<UniversityDropDownViewModel>();
         }
 
-
-        public IActionResult CreateUniversity()
-        {
-            return this.View();
-        }
+        [HttpGet]
+        [Authorize]
+        public IActionResult CreateUniversity() => this.View();
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateUniversity(CreateUniversityInputModel model)
         {
-            if (!this.ModelState.IsValid)
+            var universityName = this.universityRepository.All().Any(x => x.UniversityName == model.UniversityName);
+            var privateName = this.privateEntityRepository.All().Any(x => x.FirstName == model.PrivateName);
+            if (universityName)
             {
-                ModelState.Remove(nameof(CreateUniversityInputModel.UniversityName));
-                this.ModelState.AddModelError(nameof(CreateUniversityInputModel.UniversityName), $"University first Letter to upper");
+                this.ModelState.AddModelError(nameof(CreateUniversityInputModel.UniversityName), $"Exist {model.UniversityName}");
                 return this.View(model);
             }
-            else
+
+            if (!privateName)
             {
-                var townName = this.townRepository.All().Any(x => x.TownName == model.TownName);
-                var universityName = this.universityRepository.All().Any(x => x.UniversityName == model.UniversityName);
-                var privateName = this._privateEntityRepository.All().Any(x => x.FirstName == model.PrivateName);
-                if (universityName)
-                {
-                    this.ModelState.AddModelError(nameof(CreateUniversityInputModel.UniversityName), $"Exist {model.UniversityName}");
-                    return this.View(model);
-                }
+                this.ModelState.AddModelError(nameof(CreateUniversityInputModel.PrivateName), $"Not Found {model.PrivateName}");
+                return this.View(model);
+            }
 
-                if (!privateName)
-                {
-                    this.ModelState.AddModelError(nameof(CreateUniversityInputModel.PrivateName), $"Not Found {model.PrivateName}");
-                    return this.View(model);
-                }
-
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
             }
 
             await this.universityService.CreateAsync(model);
-            return this.View();
+            return this.View(model);
         }
 
         [HttpGet]
-        public IActionResult Edit()
-        {
-            var universities = this.universityService.GetAll<UniversityDropDownViewModel>().ToList();
-            var viewModel = new EditUniversityInputModel();
-            viewModel.UniversityDropDown = universities;
-            return this.View(viewModel);
-        }
+        [Authorize]
+        public IActionResult Edit() => this.View(new EditUniversityInputModel{UniversityDropDown = this.universityDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
@@ -80,6 +69,7 @@
         {
             if (!this.ModelState.IsValid)
             {
+                model.UniversityDropDown = this.universityDropDown.ToList();
                 return this.View(model);
             }
 

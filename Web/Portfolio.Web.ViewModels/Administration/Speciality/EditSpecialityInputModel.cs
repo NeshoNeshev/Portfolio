@@ -9,6 +9,7 @@
 
     public class EditSpecialityInputModel : IMapFrom<Specialty>
     {
+        [DisplayName("Specialty")]
         public string Id { get; set; }
 
         [Required]

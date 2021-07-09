@@ -9,7 +9,6 @@
 
     public class CourseInputModel : IMapFrom<Data.Models.Course>
     {
-        public string Id { get; set; }
 
         [Required]
         [DisplayName("Course Name")]
@@ -24,7 +23,7 @@
         public string Date { get; set; }
 
         [Required]
-        [DisplayName("SpecialityId")]
+        [DisplayName("Speciality")]
         public string SpecialityId { get; set; }
 
         public ICollection<SpecialityDropDown> SpecialtiesDropDowns { get; set; }

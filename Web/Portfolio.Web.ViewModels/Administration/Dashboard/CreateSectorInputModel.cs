@@ -10,7 +10,6 @@
 
     public class CreateSectorInputModel : IMapFrom<Sector>
     {
-
         [Required]
         [DisplayName("Sector Name")]
         public string SectorName { get; set; }
@@ -20,6 +19,5 @@
         public string OrganizationId { get; set; }
 
         public ICollection<OrganizationDropDownViewModel> OrganizationDropDown { get; set; }
-
     }
 }

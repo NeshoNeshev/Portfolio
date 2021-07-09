@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Portfolio.Data.Models;
-using Portfolio.Services.Mapping;
-
-namespace Portfolio.Web.ViewModels.Administration.Dashboard
+﻿namespace Portfolio.Web.ViewModels.Administration.Dashboard
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public class EditPositionInputModel 
     {
 
@@ -27,7 +23,6 @@ namespace Portfolio.Web.ViewModels.Administration.Dashboard
         [DisplayName("Period")]
         public string Period { get; set; }
 
-        [DisplayName("PositionName")]
         public ICollection<PositionDropDownViewModel> DropDownModel { get; set; }
     }
 }

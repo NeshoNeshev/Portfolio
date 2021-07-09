@@ -1,72 +1,61 @@
-﻿
-using Portfolio.Services.Mapping;
-using Portfolio.Web.ViewModels.Administration.PositionViewModel;
-
-namespace Portfolio.Web.Areas.Administration.Controllers
+﻿namespace Portfolio.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Portfolio.Data.Common.Repositories;
-    using Portfolio.Data.Models;
+    using Portfolio.Common;
     using Portfolio.Services.Data;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
 
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Area("Administration")]
     public class PositionController : AdministrationController
     {
-        private readonly ICreateSectorService _sectorService;
-        private readonly ICreatePositionService _positionService;
-        private readonly IDeletableEntityRepository<Position> _positionRepository;
+        private readonly ICreateSectorService sectorService;
+        private readonly ICreatePositionService positionService;
+        private readonly IEnumerable<SectorDropDownViewModel> sectorDropDown;
+        private readonly IEnumerable<PositionDropDownViewModel> positionDropDown;
 
-        public PositionController( ICreateSectorService sectorService,ICreatePositionService positionService,IDeletableEntityRepository<Position> positionRepository)
+        public PositionController(ICreateSectorService sectorService, ICreatePositionService positionService)
         {
-            _sectorService = sectorService;
-            _positionService = positionService;
-            _positionRepository = positionRepository;
+            this.sectorService = sectorService;
+            this.positionService = positionService;
+            this.positionDropDown = this.positionService.GetAll<PositionDropDownViewModel>();
+            this.sectorDropDown = this.sectorService.GetAll<SectorDropDownViewModel>();
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult CreatePosition()
-        {
-            var sectors = this._sectorService.GetAll<SectorDropDownViewModel>().ToList();
-            var viewModel = new CreatePositionInputModel();
-            viewModel.SectorDropDown = sectors;
-            return this.View(viewModel);
-        }
+        public IActionResult CreatePosition() => this.View(new CreatePositionInputModel { SectorDropDown = this.sectorDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreatePosition(CreatePositionInputModel positionModel)
         {
-            if (!this.ModelState.IsValid)
+            var positionName = this.positionService.FindByNameAsync(positionModel.PositionName);
+            if (positionName)
             {
+                this.ModelState.AddModelError(nameof(CreatePositionInputModel.PositionName), $"Exist {positionModel.PositionName}");
                 return this.View(positionModel);
             }
-            else
+
+            if (!this.ModelState.IsValid)
             {
-                var positionName = this._positionService.FindByNameAsync(positionModel.PositionName);
-                if (positionName)
-                {
-                    this.ModelState.AddModelError(nameof(CreatePositionInputModel.PositionName), $"Exist {positionModel.PositionName}");
-                    return this.View(positionModel);
-                }
+                positionModel.SectorDropDown = this.sectorDropDown.ToList();
+                return this.View(positionModel);
             }
-            await this._positionService.CreateAsync(positionModel);
+
+            await this.positionService.CreateAsync(positionModel);
 
             return this.Json("sasa: as");
         }
 
         [HttpGet]
-        public IActionResult Edit()
-        {
-            var positions = this._positionService.GetAll<PositionDropDownViewModel>().ToList();
-            var viewModel = new EditPositionInputModel();
-            viewModel.DropDownModel = positions;
-            return this.View(viewModel);
-        }
+        [Authorize]
+        public IActionResult Edit() => this.View(new EditPositionInputModel { DropDownModel = this.positionDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
@@ -74,29 +63,13 @@ namespace Portfolio.Web.Areas.Administration.Controllers
         {
             if (!this.ModelState.IsValid)
             {
+                model.DropDownModel = this.positionDropDown.ToList();
                 return this.View(model);
             }
-            else
-            {
-                var exist = this._positionService.FindByIdAsync(model.Id);
 
-                if (!exist)
-                {
-                    this.ModelState.AddModelError(nameof(EditPositionInputModel.Id), $"Not Exist {model.Id}");
-                    return this.View(model);
-                }
-            }
-            await this._positionService.UpdateAsync(model);
+            await this.positionService.UpdateAsync(model);
 
             return this.View();
-        }
-        //Todo not work
-        public IActionResult ViewAllPosition()
-        {
-            var viewModel = new AllPositionModel();
-            var model = this._positionRepository.All().To<EditPositionViewModel>().ToList();
-            viewModel.Positions = model;
-            return this.View(viewModel);
         }
     }
 }

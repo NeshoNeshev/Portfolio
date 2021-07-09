@@ -1,7 +1,7 @@
-﻿using Portfolio.Services.Mapping;
-
-namespace Portfolio.Web.ViewModels.Administration.Certificate
+﻿namespace Portfolio.Web.ViewModels.Administration.Certificate
 {
+    using Portfolio.Services.Mapping;
+
     public class CertificateDropDown : IMapFrom<Data.Models.Certificate>
     {
         public string Id { get; set; }

@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using Portfolio.Services.Mapping;
-
-
-namespace Portfolio.Web.ViewModels.Administration.University
+﻿namespace Portfolio.Web.ViewModels.Administration.University
 {
-    public class EditUniversityInputModel :IMapFrom<Data.Models.University>
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
+    using Portfolio.Services.Mapping;
+
+    public class EditUniversityInputModel : IMapFrom<Data.Models.University>
     {
+        [Required]
+        [DisplayName("University")]
         public string Id { get; set; }
 
         [Required]

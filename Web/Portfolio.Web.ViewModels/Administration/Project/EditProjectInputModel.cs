@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Portfolio.Web.Areas.Administration.Views.Organization;
-
-namespace Portfolio.Web.ViewModels.Administration.Project
+﻿namespace Portfolio.Web.ViewModels.Administration.Project
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public class EditProjectInputModel
     {
+        [Required]
+        [DisplayName("Project")]
         public string Id { get; set; }
 
         [Required]
@@ -17,6 +16,7 @@ namespace Portfolio.Web.ViewModels.Administration.Project
 
         [Required]
         [DisplayName("New Project Url")]
+        [Url]
         public string NewProjectUrl{ get; set; }
 
         public ICollection<ProjectDropDownViewModel> ProjectDropDown { get; set; }

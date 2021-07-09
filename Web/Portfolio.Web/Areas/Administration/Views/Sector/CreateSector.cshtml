@@ -9,16 +9,22 @@
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-4">
-                    <label asp-for="SectorName" class="text-primary"></label>
-                    <input asp-for="SectorName" class="form-control" />
-                    <span asp-validation-for="SectorName" class="text-danger"></span>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label asp-for="OrganizationId" class="text-primary"></label>
-                    <select asp-for="OrganizationId" asp-items="Model.OrganizationDropDown.Select(x=> new SelectListItem(x.OrganizationName,x.Id))" class="form-control"></select>
+                    <select asp-for="OrganizationId" class="form-control">
+                        @foreach (var item in Model.OrganizationDropDown)
+                        {
+                            <option value="@item.Id">@item.OrganizationName</option>
+                        }
+                    </select>
                     <span asp-validation-for="OrganizationId" class="text-danger"></span>
                 </div>
+                <div class="col-md-2">
+                    <label asp-for="SectorName" class="text-primary"></label>
+                    <input asp-for="SectorName" class="form-control" placeholder="Enter sector name" />
+                    <span asp-validation-for="SectorName" class="text-danger"></span>
+                </div>
+
             </div>
         </div>
     </section>

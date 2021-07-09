@@ -15,7 +15,6 @@
 
         [Required]
         [Display(Name = "Enter the Position Name")]
-        [RegularExpression("^[A-Z][a-z]*$")]
         public string PositionName { get; set; }
 
         [Required]

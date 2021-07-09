@@ -16,7 +16,12 @@
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-4">
                     <label asp-for="Id" class="text-primary"></label>
-                    <select asp-for="Id" asp-items="Model.OrganizaztionDropDown.Select(x=>new SelectListItem(x.OrganizationName, x.Id))" class="form-control"></select>
+                    <select asp-for="Id" class="form-control">
+                        @foreach (var item in Model.OrganizaztionDropDown)
+                        {
+                            <option value="@item.Id">@item.OrganizationName</option>
+                        }
+                    </select>
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
