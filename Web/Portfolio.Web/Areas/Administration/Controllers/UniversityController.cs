@@ -36,7 +36,7 @@
         [Authorize]
         public async Task<IActionResult> CreateUniversity(CreateUniversityInputModel model)
         {
-            var universityName = this.universityRepository.All().Any(x => x.UniversityName == model.UniversityName);
+            var universityName = this.universityService.FindByNameAsync(model.UniversityName);
             var privateName = this.privateEntityRepository.All().Any(x => x.FirstName == model.PrivateName);
             if (universityName)
             {

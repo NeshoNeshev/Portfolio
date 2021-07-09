@@ -14,15 +14,15 @@
         public string SectorId { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Position Name")]
+        [Display(Name = "Position Name")]
         public string PositionName { get; set; }
 
         [Required]
-        [Display(Name = "Enter More Information")]
+        [Display(Name = "More Information")]
         public string MoreInformation { get; set; }
 
         [Required]
-        [Display(Name = "Enter Position Period")]
+        [Display(Name = "Position Period")]
         public string PositionPeriod { get; set; }
 
         public ICollection<SectorDropDownViewModel> SectorDropDown { get; set; }

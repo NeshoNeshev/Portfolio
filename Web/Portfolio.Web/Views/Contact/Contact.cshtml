@@ -1,0 +1,90 @@
+﻿@model Portfolio.Web.ViewModels.ContactInputModels.ContactInputModel
+@using Portfolio.Common
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    ViewData["Title"] = "Contact page";
+}
+<div class="section-title">
+    <h2 id="demo" class="headertekst">Contact</h2>
+    <a href="@GlobalConstants.Facebook" target="_blank"><i class="bx bxl-facebook" style="font-size: 1.5em;"></i></a>
+    <a href="@GlobalConstants.Github" target="_blank"><i class="bx bxl-github" style="font-size: 1.5em;"></i></a>
+    <a href="@GlobalConstants.LinkedIn" target="_blank"><i class="bx bxl-linkedin" style="font-size: 1.5em;"></i></a>
+</div>
+
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+        <div class="row mt-1">
+
+            <div class="col-lg-4">
+                <div class="info">
+                    <div class="address">
+                        <i class="bx bx-location-plus"></i>
+                        <h4>Location:</h4>
+                        <p>@GlobalConstants.Address @GlobalConstants.Town</p>
+                    </div>
+
+                    <div class="email">
+                        <i class="bx bx-mail-send"></i>
+                        <h4>Email:</h4>
+                        <p>@GlobalConstants.Email</p>
+                    </div>
+
+                    <div class="phone">
+                        <a href="tel:@GlobalConstants.PhoneNumber"><i class="bx bx-phone"></i></a>
+                        <h4>Call:</h4>
+                        <p>@GlobalConstants.PhoneNumber</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-8 mt-5 mt-lg-0">
+
+                <form asp-page="/Contact" method="post" role="form" class="email-form">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Email" class="text-primary"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <label asp-for="Name" class="text-primary"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Subject" class="text-primary"></label>
+                        <input asp-for="Subject" class="form-control" />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Message" class="text-primary"></label>
+                        <textarea asp-for="Message" class="form-control"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
+                    <div class="text-center"><button type="submit">Send Message</button></div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+@section Scripts{
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function (token) {
+                document.getElementById("RecaptchaValue").value = token;
+            });
+        });
+    </script>
+
+    <partial name="Shared/_ValidationScriptsPartial" />
+}

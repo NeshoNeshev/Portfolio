@@ -6,11 +6,11 @@
     {
 
         [Required]
-        [Display(Name = "Enter the Company Name")]
+        [Display(Name = "Company Name")]
         public string OrganizationName { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Organization Size")]
+        [Display(Name = "Organization Size")]
         public string OrganizationSize { get; set; }
 
         [Required]
@@ -18,11 +18,11 @@
         public string PrivateName { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Country Name")]
+        [Display(Name = "Country Name")]
         public string CountryName { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Town Name")]
+        [Display(Name = "Town Name")]
         public string TownName { get; set; }
     }
 }

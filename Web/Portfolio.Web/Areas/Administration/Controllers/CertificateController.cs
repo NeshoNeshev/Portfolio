@@ -40,6 +40,7 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             var certificateName = this.courseService.FindByNameAsync(model.CertificateName);
             if (certificateName)
             {
+                model.CourseDropDowns = this.courseDropDowns.ToList();
                 this.ModelState.AddModelError(nameof(CertificateInputModel.CertificateName), $"Exist {model.CertificateName}");
                 return this.View(model);
             }

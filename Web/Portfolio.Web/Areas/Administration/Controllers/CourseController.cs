@@ -39,6 +39,7 @@
             var courseName = this.courseService.FindByNameAsync(model.CourseName);
             if (courseName)
             {
+                model.SpecialtiesDropDowns = this.specialityDropDowns.ToList();
                 this.ModelState.AddModelError(nameof(CourseInputModel.CourseName), $"Exist {model.CourseName}");
                 return this.View(model);
             }

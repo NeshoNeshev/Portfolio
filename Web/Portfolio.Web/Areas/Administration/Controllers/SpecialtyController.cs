@@ -36,9 +36,10 @@
         [Authorize]
         public async Task<IActionResult> CreateSpecialty(CreateSpecialtyInputModel model)
         {
-            var sectorName = this.createSpecialtiesService.FindByNameAsync(model.SpecialtyName);
-            if (sectorName)
+            var specialtyName = this.createSpecialtiesService.FindByNameAsync(model.SpecialtyName);
+            if (specialtyName)
             {
+                model.UniversityDropDown = this.universityDropDown.ToList();
                 this.ModelState.AddModelError(nameof(CreateSpecialtyInputModel.SpecialtyName), $"Exist {model.SpecialtyName}");
                 return this.View(model);
             }

@@ -57,6 +57,7 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             var sectorName = this.createSector.FindByNameAsync(model.SectorName);
             if (sectorName)
             {
+                model.OrganizationDropDown = this.organizationDropDown.ToList();
                 this.ModelState.AddModelError(nameof(CreateSectorInputModel.SectorName), $"Exist {model.SectorName}");
                 return this.View(model);
             }

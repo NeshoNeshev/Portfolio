@@ -18,6 +18,16 @@
 
         public const string Facebook = "https://m.facebook.com/profile.php?id=100000613655380";
 
+        public const string Email = "neshev1978@gmail.com";
+
+        public const string SenderEmail = "nesho1978@abv.bg";
+
+        public const string PhoneNumber = "+359 888 724 640";
+
+        public const string Address = "11 Georgi Kirkov Street";
+
+        public const string Town = "Burgas";
+
         public const string UserDescription = "I have been studying programming since January 2020,I have been interested in information technology since I was a child.My favorite programming language is C # but I also like JavScript. I have good algorithmic thinking,excellent sоft skills and excellent commercial skills.For me this is a passion. I will be happy to be useful to you in this role.";
     }
 }

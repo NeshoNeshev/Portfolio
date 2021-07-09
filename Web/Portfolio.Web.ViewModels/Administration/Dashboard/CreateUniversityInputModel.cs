@@ -5,11 +5,11 @@
     public class CreateUniversityInputModel
     {
         [Required]
-        [Display(Name = "Enter the University Name")]
+        [Display(Name = "University Name")]
         public string UniversityName { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Period In University")]
+        [Display(Name = "Period In University")]
         public string PeriodInUniversity { get; set; }
 
         [Required]
@@ -17,7 +17,7 @@
         public string PrivateName { get; set; }
 
         [Required]
-        [Display(Name = "Enter the Country Name")]
+        [Display(Name = "Country Name")]
         public string CountryName { get; set; }
 
         [Required]

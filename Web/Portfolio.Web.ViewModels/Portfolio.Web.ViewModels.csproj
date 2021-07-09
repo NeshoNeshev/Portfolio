@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Portfolio.Data.Models\Portfolio.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\Portfolio.Services.Mapping\Portfolio.Services.Mapping.csproj" />
+    <ProjectReference Include="..\Portfolio.Web.Infrastructure\Portfolio.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -38,6 +38,7 @@
             var positionName = this.positionService.FindByNameAsync(positionModel.PositionName);
             if (positionName)
             {
+                positionModel.SectorDropDown = this.sectorDropDown.ToList();
                 this.ModelState.AddModelError(nameof(CreatePositionInputModel.PositionName), $"Exist {positionModel.PositionName}");
                 return this.View(positionModel);
             }
