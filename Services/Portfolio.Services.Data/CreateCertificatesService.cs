@@ -67,11 +67,15 @@
             var certificate = this.certificateRepository
                 .All()
                 .FirstOrDefault(x => x.Id == input.Id);
-            certificate.CertificateName = input.NewCertificateName;
-            certificate.Description = input.NewDescription;
-            certificate.Date = input.NewDate;
-            certificate.Link = input.NewLink;
-            this.certificateRepository.Update(certificate);
+            if (certificate != null)
+            {
+                certificate.CertificateName = input.NewCertificateName;
+                certificate.Description = input.NewDescription;
+                certificate.Date = input.NewDate;
+                certificate.Link = input.NewLink;
+                this.certificateRepository.Update(certificate);
+            }
+
             await this.certificateRepository.SaveChangesAsync();
         }
     }

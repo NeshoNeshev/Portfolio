@@ -6,6 +6,8 @@
 
     public class EditCertificateInputModel
     {
+        [Required]
+        [DisplayName("Certificate")]
         public string Id { get; set; }
 
         [Required]
@@ -21,6 +23,7 @@
 
         [Required]
         [DisplayName("New Link")]
+        [Url]
         public string NewLink { get; set; }
 
         public ICollection<CertificateDropDown> CertificateDropDowns { get; set; }

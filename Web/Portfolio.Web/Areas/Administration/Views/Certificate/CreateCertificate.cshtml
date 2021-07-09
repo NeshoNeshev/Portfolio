@@ -10,29 +10,34 @@
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-4">
+                    <label asp-for="CourseId" class="text-primary"></label>
+                    <select asp-for="CourseId" class="form-control">
+                        @foreach (var item in Model.CourseDropDowns)
+                        {
+                            <option value="@item.Id">@item.CourseName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
                     <label asp-for="CertificateName" class="text-primary"></label>
-                    <input asp-for="CertificateName" class="form-control" />
+                    <input asp-for="CertificateName" class="form-control" placeholder="Enter certificate name" />
                     <span asp-validation-for="CertificateName" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
                     <label asp-for="Description" class="text-primary"></label>
-                    <input asp-for="Description" class="form-control" />
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Enter new description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
                     <label asp-for="Date" class="text-primary"></label>
-                    <input asp-for="Date" class="form-control" />
+                    <input asp-for="Date" class="form-control" placeholder="Enter date"/>
                     <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
                     <label asp-for="Link" class="text-primary"></label>
-                    <input asp-for="Link" class="form-control" />
+                    <input asp-for="Link" class="form-control" placeholder="Enter link"/>
                     <span asp-validation-for="Link" class="text-danger"></span>
-                </div>
-                <div class="col-md-4">
-                    <label asp-for="CourseId" class="text-primary"></label>
-                    <select asp-for="CourseId" asp-items="Model.CourseDropDowns.Select(x=> new SelectListItem(x.CourseName,x.Id))" class="form-control"></select>
-                    <span asp-validation-for="CourseId" class="text-danger"></span>
                 </div>
             </div>
         </div>

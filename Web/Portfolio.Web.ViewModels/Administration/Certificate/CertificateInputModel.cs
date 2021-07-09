@@ -9,16 +9,14 @@
 
     public class CertificateInputModel : IMapFrom<Data.Models.Certificate>
     {
-        public string Id { get; set; }
-
         [Required]
         [DisplayName("Certificate Name")]
         public string CertificateName { get; set; }
 
         [Required]
         [DisplayName("Link")]
+        [Url]
         public string Link { get; set; }
-
 
         [DisplayName("Description")]
         public string Description { get; set; }
@@ -27,6 +25,8 @@
         [DisplayName("Date")]
         public string Date { get; set; }
 
+        [Required]
+        [DisplayName("Course")]
         public string CourseId { get; set; }
 
         public ICollection<CourseDropDown> CourseDropDowns { get; set; }
