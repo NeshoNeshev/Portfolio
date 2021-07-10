@@ -11,19 +11,17 @@
     using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
 
-    public class CreateSectorService : ICreateSectorService
+    public class SectorService : ISectorService
     {
-        private readonly IDeletableEntityRepository<Sector> sectoRepository;
+        private readonly IDeletableEntityRepository<Sector> sectorRepository;
         private readonly IDeletableEntityRepository<Organization> organizationRepository;
-        private readonly IDeletableEntityRepository<Position> positionRepository;
 
-
-        public CreateSectorService(IDeletableEntityRepository<Sector> sectoRepository,
-            IDeletableEntityRepository<Organization> organizationRepository, IDeletableEntityRepository<Position> positionRepository)
+        public SectorService(
+            IDeletableEntityRepository<Sector> sectorRepository,
+            IDeletableEntityRepository<Organization> organizationRepository)
         {
-            this.sectoRepository = sectoRepository;
+            this.sectorRepository = sectorRepository;
             this.organizationRepository = organizationRepository;
-            this.positionRepository = positionRepository;
         }
 
         public async Task CreateAsync(CreateSectorInputModel model)
@@ -34,7 +32,7 @@
                return;
             }
 
-            var exist = this.sectoRepository.All().Any(x => x.SectorName == model.SectorName);
+            var exist = this.sectorRepository.All().Any(x => x.SectorName == model.SectorName);
             if (exist)
             {
                 return;
@@ -47,13 +45,13 @@
                 Organization= organization,
             };
 
-            await this.sectoRepository.AddAsync(sector);
-            await this.sectoRepository.SaveChangesAsync();
+            await this.sectorRepository.AddAsync(sector);
+            await this.sectorRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<Sector> query = this.sectoRepository.All().Include(x=>x.Positions).OrderBy(x => x.SectorName);
+            IQueryable<Sector> query = this.sectorRepository.All().Include(x=>x.Positions).OrderBy(x => x.SectorName);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
@@ -63,16 +61,16 @@
         }
 
         public bool FindByNameAsync(string name)
-            => this.sectoRepository
+            => this.sectorRepository
                 .All()
                 .Any(s => s.SectorName == name);
 
-        public bool FindByIdAsync(string id) => this.sectoRepository
+        public bool FindByIdAsync(string id) => this.sectorRepository
             .All()
             .Any(x => x.Id == id);
 
         public async Task<T> GetByName<T>(string name)
-            => await this.sectoRepository
+            => await this.sectorRepository
                 .All()
                 .Where(p => p.SectorName== name)
                 .To<T>()
@@ -80,14 +78,14 @@
 
         public async Task UpdateAsync(EditSectorInputModel input)
         {
-            var sector = this.sectoRepository
+            var sector = this.sectorRepository
                 .All()
                 .FirstOrDefault(x => x.Id == input.Id);
 
             sector.SectorName = input.NewSectorName;
 
-            this.sectoRepository.Update(sector);
-            await this.sectoRepository.SaveChangesAsync();
+            this.sectorRepository.Update(sector);
+            await this.sectorRepository.SaveChangesAsync();
         }
     }
 }

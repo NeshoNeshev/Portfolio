@@ -23,7 +23,7 @@
         [Display(Name = "Message")]
         public string Message { get; set; }
 
-        [GoogleRecapchaValidationattribute]
+        [GoogleRecaptchaValidation]
         public string RecaptchaValue { get; set; }
     }
 }

@@ -13,21 +13,21 @@ namespace Portfolio.Services.Data
     using Portfolio.Web.ViewModels.Administration.Dashboard;
     using Portfolio.Web.ViewModels.Administration.University;
 
-    public class CreateUniversityService : ICreateUniversityService
+    public class UniversityService : IUniversityService
     {
         private readonly IDeletableEntityRepository<University> universityRepository;
         private readonly IDeletableEntityRepository<Country> countryRepository;
         private readonly IDeletableEntityRepository<PrivateInformation> privatEntityRepository;
-        private readonly ICreateCountryService createCountry;
-        private readonly ICreateTownService townService;
+        private readonly ICountryService createCountry;
+        private readonly ITownService townService;
 
-        public CreateUniversityService(IDeletableEntityRepository<University> universityRepository,
+        public UniversityService(IDeletableEntityRepository<University> universityRepository,
 
             IDeletableEntityRepository<Country> countryRepository,
             IDeletableEntityRepository<PrivateInformation> privatEntityRepository,
-            ICreateCountryService createCountry,
-            ICreateTownService townService,
-            ICreateCourseService courseService)
+            ICountryService createCountry,
+            ITownService townService,
+            ICourseService courseService)
         {
             this.universityRepository = universityRepository;
             this.countryRepository = countryRepository;

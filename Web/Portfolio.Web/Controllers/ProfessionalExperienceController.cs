@@ -1,28 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Portfolio.Services.Data;
-using Portfolio.Web.ViewModels.ProfessionalExperienceViewModels;
-
-namespace Portfolio.Web.Controllers
+﻿namespace Portfolio.Web.Controllers
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Portfolio.Services.Data;
+    using Portfolio.Web.ViewModels.ProfessionalExperienceViewModels;
+
     public class ProfessionalExperienceController : Controller
     {
-        private readonly ICreateOrganizationServices _organizationServices;
+        private readonly IOrganizationServices organizationServices;
 
-        public ProfessionalExperienceController(ICreateOrganizationServices organizationServices)
+        public ProfessionalExperienceController(IOrganizationServices organizationServices)
         {
-            _organizationServices = organizationServices;
+            this.organizationServices = organizationServices;
         }
 
         public IActionResult ProfessionalExperience()
         {
             var model = new AllProfessionalExperience();
-            var viewModel = this._organizationServices.GetAll<ProfessionalExperienceViewModel>().ToList();
+            var viewModel = this.organizationServices.GetAll<ProfessionalExperienceViewModel>().ToList();
             model.ProfessionalExperienceViewModels = viewModel;
-            return View(model);
+            return this.View(model);
         }
     }
 }

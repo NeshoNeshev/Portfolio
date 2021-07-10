@@ -15,12 +15,12 @@
     [Area("Administration")]
     public class CourseController : AdministrationController
     {
-        private readonly ICreateSpecialtiesService specialtiesService;
-        private readonly ICreateCourseService courseService;
+        private readonly ISpecialtiesService specialtiesService;
+        private readonly ICourseService courseService;
         private readonly IEnumerable<SpecialityDropDown> specialityDropDowns;
         private readonly IEnumerable<CourseDropDown> courseDropDowns;
 
-        public CourseController(ICreateSpecialtiesService specialtiesService, ICreateCourseService courseService)
+        public CourseController(ISpecialtiesService specialtiesService, ICourseService courseService)
         {
             this.specialtiesService = specialtiesService;
             this.courseService = courseService;

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Portfolio.Services.Data
+﻿namespace Portfolio.Services.Data
 {
     using System;
     using System.Linq;
@@ -9,12 +7,12 @@ namespace Portfolio.Services.Data
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
 
-    public class CreateTownService : ICreateTownService
+    public class TownService : ITownService
     {
         private readonly IDeletableEntityRepository<Town> townRepository;
         private readonly IDeletableEntityRepository<Country> countryRepository;
 
-        public CreateTownService(IDeletableEntityRepository<Town> townRepository, IDeletableEntityRepository<Country> countryRepository)
+        public TownService(IDeletableEntityRepository<Town> townRepository, IDeletableEntityRepository<Country> countryRepository)
         {
             this.townRepository = townRepository;
             this.countryRepository = countryRepository;

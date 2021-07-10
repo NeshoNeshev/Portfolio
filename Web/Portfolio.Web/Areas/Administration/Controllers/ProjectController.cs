@@ -19,18 +19,18 @@
     [Area("Administration")]
     public class ProjectController : AdministrationController
     {
+        private readonly Cloudinary cloudinary;
         private readonly IDeletableEntityRepository<Project> projectRepository;
         private readonly IDeletableEntityRepository<PrivateInformation> privateInformation;
         private readonly IProjectService projectService;
-        private readonly Cloudinary cloudinary;
         private readonly IEnumerable<ProjectDropDownViewModel> projectDropDown;
 
-        public ProjectController(Cloudinary cloudinary, IDeletableEntityRepository<Project> projectRepository, IDeletableEntityRepository<PrivateInformation> privateInformation,IProjectService projectService)
+        public ProjectController(Cloudinary cloudinary, IDeletableEntityRepository<Project> projectRepository, IDeletableEntityRepository<PrivateInformation> privateInformation, IProjectService projectService)
         {
+            this.cloudinary = cloudinary;
             this.projectRepository = projectRepository;
             this.privateInformation = privateInformation;
             this.projectService = projectService;
-            this.cloudinary = cloudinary;
             this.projectDropDown = this.projectService.GetAll<ProjectDropDownViewModel>();
         }
 
@@ -40,11 +40,14 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateProject(ICollection<IFormFile> files, ProjectInputModel model)
+        public async Task<IActionResult> CreateProject(ProjectInputModel model, IFormFile file)
         {
             var projectName = this.projectRepository.All()
                 .Any(x => x.ProjectName == model.ProjectName);
             var privateName = this.privateInformation.All().Any(x => x.FirstName == model.PrivateName);
+
+            model.ImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
+
             if (projectName)
             {
                 this.ModelState.AddModelError(
@@ -66,20 +69,19 @@
                 return this.View(model);
             }
 
-            var result = await CloudinaryExtension.UploadAsync(this.cloudinary, files);
-
             await this.projectService.CreateAsync(model);
             return this.View(model);
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Edit() => this.View(new EditProjectInputModel{ProjectDropDown = this.projectDropDown.ToList() });
+        public IActionResult Edit() => this.View(new EditProjectInputModel { ProjectDropDown = this.projectDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(EditProjectInputModel model)
+        public async Task<IActionResult> Edit(EditProjectInputModel model, IFormFile file)
         {
+            model.NewImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
             if (!this.ModelState.IsValid)
             {
                 model.ProjectDropDown = this.projectDropDown.ToList();

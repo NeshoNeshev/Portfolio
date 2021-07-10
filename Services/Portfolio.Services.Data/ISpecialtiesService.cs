@@ -3,20 +3,18 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Portfolio.Web.ViewModels.Administration.Certificate;
+    using Portfolio.Web.ViewModels.Administration.Speciality;
 
-    public interface ICreateCertificatesService
+    public interface ISpecialtiesService
     {
-        Task CreateAsync(CertificateInputModel model);
+        Task CreateAsync(CreateSpecialtyInputModel model);
 
         public IEnumerable<T> GetAll<T>(int? count = null);
 
-
         public bool FindByNameAsync(string name);
-
 
         public bool FindByIdAsync(string id);
 
-        public Task UpdateAsync(EditCertificateInputModel input);
+        public Task UpdateAsync(EditSpecialityInputModel model);
     }
 }

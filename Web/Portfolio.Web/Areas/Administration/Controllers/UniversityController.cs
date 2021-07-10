@@ -17,10 +17,10 @@
 
         private readonly IDeletableEntityRepository<PrivateInformation> privateEntityRepository;
         private readonly IDeletableEntityRepository<University> universityRepository;
-        private readonly ICreateUniversityService universityService;
+        private readonly IUniversityService universityService;
         private readonly IEnumerable<UniversityDropDownViewModel> universityDropDown;
 
-        public UniversityController(IDeletableEntityRepository<PrivateInformation> privateEntityRepository, IDeletableEntityRepository<University> universityRepository, ICreateUniversityService universityService)
+        public UniversityController(IDeletableEntityRepository<PrivateInformation> privateEntityRepository, IDeletableEntityRepository<University> universityRepository, IUniversityService universityService)
         {
             this.privateEntityRepository = privateEntityRepository;
             this.universityRepository = universityRepository;

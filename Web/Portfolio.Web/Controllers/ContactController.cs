@@ -31,13 +31,14 @@
                 return this.View(model);
             }
 
-            await this.emailSender.SendEmailAsync(GlobalConstants.SenderEmail,
+            await this.emailSender.SendEmailAsync(
+                GlobalConstants.SenderEmail,
                 model.Name,
                 GlobalConstants.Email,
                 model.Subject,
                 this.ModifyContentMessage(model.Message, model.Email));
 
-            return View();
+            return this.RedirectToAction("ThankYou");
         }
 
         private string ModifyContentMessage(string message, string email)
@@ -46,6 +47,11 @@
             sb.AppendLine(message);
             sb.AppendLine(email);
             return sb.ToString();
+        }
+
+        public IActionResult ThankYou()
+        {
+            return this.View();
         }
     }
 }

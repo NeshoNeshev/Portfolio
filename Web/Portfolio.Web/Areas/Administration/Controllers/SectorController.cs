@@ -21,14 +21,14 @@ namespace Portfolio.Web.Areas.Administration.Controllers
     [Area("Administration")]
     public class SectorController : AdministrationController
     {
-        private readonly ICreateSectorService createSector;
-        private readonly ICreateOrganizationServices organizationServices;
-        private readonly ICreatePositionService positionService;
+        private readonly ISectorService createSector;
+        private readonly IOrganizationServices organizationServices;
+        private readonly IPositionService positionService;
         private readonly IDeletableEntityRepository<Sector> sectoRepository;
         private readonly IEnumerable<SectorDropDownViewModel> sectorDropDown;
         private readonly IEnumerable<OrganizationDropDownViewModel> organizationDropDown;
 
-        public SectorController(ICreateSectorService createSector, ICreateOrganizationServices organizationServices, ICreatePositionService positionService, IDeletableEntityRepository<Sector> sectoRepository)
+        public SectorController(ISectorService createSector, IOrganizationServices organizationServices, IPositionService positionService, IDeletableEntityRepository<Sector> sectoRepository)
         {
             this.createSector = createSector;
             this.organizationServices = organizationServices;

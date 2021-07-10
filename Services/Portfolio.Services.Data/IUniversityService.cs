@@ -6,7 +6,7 @@
     using Portfolio.Web.ViewModels.Administration.Dashboard;
     using Portfolio.Web.ViewModels.Administration.University;
 
-    public interface ICreateUniversityService
+    public interface IUniversityService
     {
         Task CreateAsync(CreateUniversityInputModel model);
 

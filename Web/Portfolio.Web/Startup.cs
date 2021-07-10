@@ -1,9 +1,17 @@
-﻿using CloudinaryDotNet;
-
-namespace Portfolio.Web
+﻿namespace Portfolio.Web
 {
+    using System;
     using System.Reflection;
 
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Portfolio.Data;
     using Portfolio.Data.Common;
     using Portfolio.Data.Common.Repositories;
@@ -14,15 +22,6 @@ namespace Portfolio.Web
     using Portfolio.Services.Mapping;
     using Portfolio.Services.Messaging;
     using Portfolio.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
 
     public class Startup
     {
@@ -54,6 +53,8 @@ namespace Portfolio.Web
                     {
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => { options.IdleTimeout=TimeSpan.FromSeconds(10); });
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -62,8 +63,7 @@ namespace Portfolio.Web
             (
                 this.configuration["Cloudinary:AppName"],
                 this.configuration["Cloudinary:AppKey"],
-                this.configuration["Cloudinary:AppSecret"]
-            );
+                this.configuration["Cloudinary:AppSecret"]);
 
             Cloudinary cloudinary = new Cloudinary(account);
             // Data repositories
@@ -73,16 +73,17 @@ namespace Portfolio.Web
             services.AddScoped(typeof(IChangeInputToUpper<>), typeof(ChangeInputToUpper<>));
             // Application services
             services.AddSingleton(cloudinary);
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ICreateOrganizationServices, CreateOrganizationServices>();
-            services.AddTransient<ICreateSectorService, CreateSectorService>();
-            services.AddTransient<ICreatePositionService, CreatePositionService>();
-            services.AddTransient<ICreateCountryService, CreateCountryService>();
-            services.AddTransient<ICreateTownService, CreateTownService>();
-            services.AddTransient<ICreateUniversityService, CreateUniversityService>();
-            services.AddTransient<ICreateSpecialtiesService, CreateSpecialtiesService>();
-            services.AddTransient<ICreateCertificatesService, CreateCertificatesService>();
-            services.AddTransient<ICreateCourseService, CreateCourseService>();
+            services.AddTransient<IEmailSender>(
+                serviceProvider => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
+            services.AddTransient<IOrganizationServices, OrganizationServices>();
+            services.AddTransient<ISectorService, SectorService>();
+            services.AddTransient<IPositionService, PositionService>();
+            services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<ITownService, TownService>();
+            services.AddTransient<IUniversityService, UniversityService>();
+            services.AddTransient<ISpecialtiesService, SpecialtiesService>();
+            services.AddTransient<ICertificatesService, CertificatesService>();
+            services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IGetAgeService, GetAgeService>();
         }

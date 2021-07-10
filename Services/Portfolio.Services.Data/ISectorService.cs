@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Portfolio.Web.ViewModels.Administration.Course;
+    using Portfolio.Web.ViewModels.Administration.Dashboard;
 
-    public interface ICreateCourseService
+    public interface ISectorService
     {
-        Task CreateAsync(CourseInputModel model);
+        Task CreateAsync(CreateSectorInputModel model);
 
         public IEnumerable<T> GetAll<T>(int? count = null);
 
@@ -15,7 +15,8 @@
 
         public bool FindByIdAsync(string id);
 
-        public Task UpdateAsync(EditCourseInputModel input);
+        public Task<T> GetByName<T>(string name);
 
+        public Task UpdateAsync(EditSectorInputModel input);
     }
 }

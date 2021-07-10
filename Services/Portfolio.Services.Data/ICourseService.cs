@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Portfolio.Web.ViewModels.Administration.Speciality;
+    using Portfolio.Web.ViewModels.Administration.Course;
 
-    public interface ICreateSpecialtiesService
+    public interface ICourseService
     {
-        Task CreateAsync(CreateSpecialtyInputModel model);
+        Task CreateAsync(CourseInputModel model);
 
         public IEnumerable<T> GetAll<T>(int? count = null);
 
@@ -15,7 +15,7 @@
 
         public bool FindByIdAsync(string id);
 
-        public Task UpdateAsync(EditSpecialityInputModel model);
+        public Task UpdateAsync(EditCourseInputModel input);
 
     }
 }

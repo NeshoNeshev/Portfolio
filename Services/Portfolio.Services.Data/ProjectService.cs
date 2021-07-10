@@ -1,38 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Portfolio.Data.Common.Models;
-using Portfolio.Data.Common.Repositories;
-using Portfolio.Data.Models;
-using Portfolio.Services.Mapping;
-using Portfolio.Web.ViewModels.Administration.Dashboard;
-using Portfolio.Web.ViewModels.Administration.Organization;
-using Portfolio.Web.ViewModels.Administration.Project;
-
-namespace Portfolio.Services.Data
+﻿namespace Portfolio.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Portfolio.Data.Common.Repositories;
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+    using Portfolio.Web.ViewModels.Administration.Project;
+
     public class ProjectService : IProjectService
     {
-        private readonly IDeletableEntityRepository<Project> _projectRepository;
-        private readonly IDeletableEntityRepository<PrivateInformation> _privatEntityRepository;
+        private readonly IDeletableEntityRepository<Project> projectRepository;
+        private readonly IDeletableEntityRepository<PrivateInformation> privatEntityRepository;
 
         public ProjectService(IDeletableEntityRepository<Project> projectRepository, IDeletableEntityRepository<PrivateInformation> privatEntityRepository)
         {
-            _projectRepository = projectRepository;
-            _privatEntityRepository = privatEntityRepository;
+            this.projectRepository = projectRepository;
+            this.privatEntityRepository = privatEntityRepository;
         }
 
         public async Task CreateAsync(ProjectInputModel input)
         {
-            var projectExist = this._projectRepository.All().Any(x => x.ProjectName == input.ProjectName);
+            var projectExist = this.projectRepository.All().Any(x => x.ProjectName == input.ProjectName);
             if (projectExist)
             {
                 return;
             }
 
-            var privateInformation = this._privatEntityRepository.All().FirstOrDefault(x => x.FirstName == input.PrivateName);
+            var privateInformation = this.privatEntityRepository.All().FirstOrDefault(x => x.FirstName == input.PrivateName);
             if (privateInformation == null)
             {
                 return;
@@ -43,28 +41,32 @@ namespace Portfolio.Services.Data
                 Id = Guid.NewGuid().ToString(),
                 ProjectName = input.ProjectName,
                 ImgUrl = input.ImgUrl,
+                SiteUrl = input.SiteUrl,
+                Content = input.Content,
             };
 
             project.PrivateInformation = privateInformation;
-            await this._projectRepository.AddAsync(project);
-            await this._projectRepository.SaveChangesAsync();
+            await this.projectRepository.AddAsync(project);
+            await this.projectRepository.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(EditProjectInputModel input)
         {
-            var project = this._projectRepository
+            var project = this.projectRepository
                 .All()
                 .FirstOrDefault(x => x.Id == input.Id);
 
             project.ProjectName = input.NewProjectName;
-            project.ImgUrl = input.NewProjectUrl;
-            this._projectRepository.Update(project);
-            await this._projectRepository.SaveChangesAsync();
+            project.ImgUrl = input.NewImgUrl;
+            project.SiteUrl = input.NewSiteUrl;
+            project.Content = input.NewContent;
+            this.projectRepository.Update(project);
+            await this.projectRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<Project> query = this._projectRepository.All().OrderBy(x => x.ProjectName);
+            IQueryable<Project> query = this.projectRepository.All().OrderBy(x => x.ProjectName);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
@@ -74,11 +76,11 @@ namespace Portfolio.Services.Data
         }
 
         public bool FindByNameAsync(string name)
-            => this._projectRepository
+            => this.projectRepository
                 .All()
                 .Any(s => s.ProjectName == name);
 
-        public bool FindByIdAsync(string id) => this._projectRepository
+        public bool FindByIdAsync(string id) => this.projectRepository
             .All()
             .Any(x => x.Id == id);
 

@@ -5,20 +5,28 @@
 <div class="text-center">
     <h1 class="text-primary">@this.ViewData["Title"]</h1>
 </div>
-<form method="post" asp-action="CreateProject">
+
+<form method="post" enctype="multipart/form-data" asp-action="CreateProject">
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-4">
                     <label asp-for="ProjectName" class="text-primary"></label>
-                    <input asp-for="ProjectName" class="form-control"placeholder="Enter project name" />
+                    <input asp-for="ProjectName" class="form-control" placeholder="Enter project name" />
                     <span asp-validation-for="ProjectName" class="text-danger"></span>
                 </div>
                 <div class="col-md-4">
-                    <label asp-for="ImgUrl" class="text-primary"></label>
-                    <input asp-for="ImgUrl" class="form-control" placeholder="Enter project link"/>
-                    <span asp-validation-for="ImgUrl" class="text-danger"></span>
+                    <label asp-for="SiteUrl" class="text-primary"></label>
+                    <input asp-for="SiteUrl" class="form-control" placeholder="Enter project name" />
+                    <span asp-validation-for="SiteUrl" class="text-danger"></span>
                 </div>
+                <div class="col-md-4">
+                    <label asp-for="Content" class="text-primary"></label>
+                    <input asp-for="Content" class="form-control" placeholder="Enter project name" />
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <input type="file" name="file" multiple="" />
+
                 <div class="col-md-4">
                     <label asp-for="PrivateName" class="text-primary"></label>
                     <input asp-for="PrivateName" class="form-control" />
@@ -26,6 +34,7 @@
                 </div>
             </div>
         </div>
+
     </section>
     <br />
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
@@ -51,8 +60,4 @@
             </div>
         </div>
     </div>
-</form>
-<form method="post" enctype="multipart/form-data" asp-controller="Project" asp-action="createProject">
-    <input type="file" name="files" multiple="" />
-    <button type="submit" value="Upload"></button>
 </form>

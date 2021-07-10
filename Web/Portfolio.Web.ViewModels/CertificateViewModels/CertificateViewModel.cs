@@ -1,8 +1,8 @@
-﻿using Portfolio.Data.Models;
-using Portfolio.Services.Mapping;
-
-namespace Portfolio.Web.ViewModels.CertificateViewModels
+﻿namespace Portfolio.Web.ViewModels.CertificateViewModels
 {
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+
     public class CertificateViewModel : IMapFrom<Certificate>
     {
         public string CertificateName { get; set; }

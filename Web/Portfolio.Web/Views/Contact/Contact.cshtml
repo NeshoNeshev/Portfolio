@@ -40,33 +40,36 @@
             </div>
 
             <div class="col-lg-8 mt-5 mt-lg-0">
-
-                <form asp-page="/Contact" method="post" role="form" class="email-form">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label asp-for="Email" class="text-primary"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6 form-group mt-3 mt-md-0">
-                            <label asp-for="Name" class="text-primary"></label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
+                <form method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group mt-3">
-                        <label asp-for="Subject" class="text-primary"></label>
-                        <input asp-for="Subject" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Subject"></label>
+                        <input asp-for="Subject" class="form-control"/>
                         <span asp-validation-for="Subject" class="text-danger"></span>
                     </div>
-                    <div class="form-group mt-3">
-                        <label asp-for="Message" class="text-primary"></label>
-                        <textarea asp-for="Message" class="form-control"></textarea>
+                    <div class="form-group">
+                        <label asp-for="Message"></label>
+                        <textarea asp-for="Message" class="form-control" rows="5"></textarea>
                         <span asp-validation-for="Message" class="text-danger"></span>
                     </div>
-                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
-                    <div class="text-center"><button type="submit">Send Message</button></div>
+                    <p>
+                        Натискайки бутона "Изпратете ни съобщение", вие потвърждавате, че сте запознати и съгласни с нашата
+                        <a asp-area="" asp-controller="Home" asp-action="Privacy">политика за опазване на личните данни</a>
+                    </p>
+                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue"/>
+                    <button type="submit" class="btn btn-primary">Изпратете ни съобщение</button>
                 </form>
+
 
             </div>
 
@@ -75,16 +78,14 @@
     </div>
 </section>
 
-@section Scripts{
-
+@section Scripts
+{
     <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
     <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function (token) {
+        grecaptcha.ready(function() {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function(token) {
                 document.getElementById("RecaptchaValue").value = token;
             });
         });
     </script>
-
-    <partial name="Shared/_ValidationScriptsPartial" />
 }

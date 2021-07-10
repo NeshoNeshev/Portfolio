@@ -10,14 +10,13 @@
     using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Course;
 
-    public class CreateCourseService : ICreateCourseService
+    public class CourseService : ICourseService
     {
         private readonly IDeletableEntityRepository<Specialty> specialityRepository;
         private readonly IDeletableEntityRepository<Course> courseRepository;
 
-        public CreateCourseService(IDeletableEntityRepository<Specialty> specialityRepository,
-            IDeletableEntityRepository<Course> courseRepository
-           )
+        public CourseService(IDeletableEntityRepository<Specialty> specialityRepository,
+            IDeletableEntityRepository<Course> courseRepository)
         {
             this.specialityRepository = specialityRepository;
             this.courseRepository = courseRepository;

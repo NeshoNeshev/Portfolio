@@ -10,22 +10,23 @@
     using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
 
-    public class CreatePositionService : ICreatePositionService
+    public class PositionService : IPositionService
     {
         private readonly IDeletableEntityRepository<Position> positionRepository;
-        private readonly IDeletableEntityRepository<Sector> sectoRepository;
+        private readonly IDeletableEntityRepository<Sector> sectorRepository;
 
-        public CreatePositionService(IDeletableEntityRepository<Position> positionRepository,
-            IDeletableEntityRepository<Sector> sectoRepository)
+        public PositionService(
+            IDeletableEntityRepository<Position> positionRepository,
+            IDeletableEntityRepository<Sector> sectorRepository)
         {
             this.positionRepository = positionRepository;
-            this.sectoRepository = sectoRepository;
+            this.sectorRepository = sectorRepository;
         }
 
         public async Task CreateAsync(CreatePositionInputModel model)
         {
             var exist = this.positionRepository.All().Any(x => x.PositionName == model.PositionName);
-            var sector = this.sectoRepository.All().FirstOrDefault(x => x.Id == model.SectorId);
+            var sector = this.sectorRepository.All().FirstOrDefault(x => x.Id == model.SectorId);
 
             if (exist)
             {
@@ -35,8 +36,8 @@
             if (sector == null)
             {
                 return;
-
             }
+
             var position = new Position
             {
                 Id = Guid.NewGuid().ToString(),
@@ -49,14 +50,13 @@
         }
 
         public bool FindByNameAsync(string name)
-            => this.sectoRepository
+            => this.sectorRepository
                 .All()
                 .Any(s => s.SectorName == name);
 
         public bool FindByIdAsync(string id)
             => this.positionRepository
                 .All().All(x => x.Id == id);
-                
 
         public async Task UpdateAsync(EditPositionInputModel input)
         {

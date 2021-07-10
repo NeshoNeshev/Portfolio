@@ -10,12 +10,12 @@
     using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Certificate;
 
-    public class CreateCertificatesService : ICreateCertificatesService
+    public class CertificatesService : ICertificatesService
     {
         private readonly IDeletableEntityRepository<Certificate> certificateRepository;
         private readonly IDeletableEntityRepository<Course> courseRepository;
 
-        public CreateCertificatesService(IDeletableEntityRepository<Certificate> certificateRepository,IDeletableEntityRepository<Course>courseRepository)
+        public CertificatesService(IDeletableEntityRepository<Certificate> certificateRepository,IDeletableEntityRepository<Course>courseRepository)
         {
             this.certificateRepository = certificateRepository;
             this.courseRepository = courseRepository;

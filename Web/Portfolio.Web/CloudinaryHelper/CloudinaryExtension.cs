@@ -1,40 +1,37 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-
-namespace Portfolio.Web.CloudinaryHelper
+﻿namespace Portfolio.Web.CloudinaryHelper
 {
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Http;
+
     public class CloudinaryExtension
     {
-        public static async Task<IEnumerable<string>> UploadAsync(Cloudinary cloudinary, ICollection<IFormFile>files)
+        public static async Task<string> UploadAsync(Cloudinary cloudinary, IFormFile file)
         {
-            List<string> list = new List<string>();
-            foreach (var file in files)
+            string url = String.Empty;
+            byte[] destinationImage;
+            await using (var memoryStream = new MemoryStream())
             {
-                byte[] destinationImage;
-                using (var memoryStream = new MemoryStream())
-                {
-                  await  file.CopyToAsync(memoryStream);
-                  destinationImage = memoryStream.ToArray();
-                }
-
-                using (var destinationStream = new MemoryStream(destinationImage))
-                {
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(file.FileName, destinationStream)
-                    };
-                  var result=  await cloudinary.UploadAsync(uploadParams);
-
-                  list.Add(result.Uri.AbsoluteUri);
-                }
+                await file.CopyToAsync(memoryStream);
+                destinationImage = memoryStream.ToArray();
             }
 
-            return list;
+            await using (var destinationStream = new MemoryStream(destinationImage))
+            {
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(file.FileName, destinationStream),
+                };
+                var result = await cloudinary.UploadAsync(uploadParams);
+
+                url = result.Uri.AbsoluteUri;
+            }
+
+            return url;
         }
     }
 }

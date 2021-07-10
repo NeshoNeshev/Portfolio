@@ -1,8 +1,9 @@
-﻿namespace Portfolio.Data.Models
+﻿namespace Portfolio.Web.ViewModels.ProjectViewModels
 {
-    using Portfolio.Data.Common.Models;
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
 
-    public class Project : BaseDeletableModel<string>
+    public class ProjectViewModel : IMapFrom<Project>
     {
         public string ProjectName { get; set; }
 
@@ -11,7 +12,5 @@
         public string SiteUrl { get; set; }
 
         public string Content { get; set; }
-
-        public PrivateInformation PrivateInformation { get; set; }
     }
 }

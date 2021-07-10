@@ -20,12 +20,12 @@
     {
         private readonly IDeletableEntityRepository<Organization> organizationRepository;
         private readonly IDeletableEntityRepository<PrivateInformation> privateInformation;
-        private readonly ICreateOrganizationServices organizationServices;
+        private readonly IOrganizationServices organizationServices;
         private readonly IEnumerable<OrganizationDropDownViewModel> organizationDropDown;
 
         public OrganizationController(IDeletableEntityRepository<Organization> organizationRepository,
             IDeletableEntityRepository<PrivateInformation> privateInformation,
-            ICreateOrganizationServices organizationServices)
+            IOrganizationServices organizationServices)
         {
             this.organizationRepository = organizationRepository;
             this.privateInformation = privateInformation;

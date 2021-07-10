@@ -16,12 +16,12 @@ namespace Portfolio.Web.Areas.Administration.Controllers
     [Area("Administration")]
     public class CertificateController : AdministrationController
     {
-        private readonly ICreateCourseService courseService;
-        private readonly ICreateCertificatesService certificatesService;
+        private readonly ICourseService courseService;
+        private readonly ICertificatesService certificatesService;
         private readonly IEnumerable<CourseDropDown> courseDropDowns;
         private readonly IEnumerable<CertificateDropDown> certificateDropDowns;
 
-        public CertificateController(ICreateCourseService courseService, ICreateCertificatesService certificatesService)
+        public CertificateController(ICourseService courseService, ICertificatesService certificatesService)
         {
             this.courseService = courseService;
             this.certificatesService = certificatesService;

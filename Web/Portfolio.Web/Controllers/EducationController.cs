@@ -1,29 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Portfolio.Data.Common.Repositories;
-using Portfolio.Data.Models;
-using Portfolio.Services.Data;
-using Portfolio.Web.ViewModels.EducationViewModels;
-
-namespace Portfolio.Web.Controllers
+﻿namespace Portfolio.Web.Controllers
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Portfolio.Data.Common.Repositories;
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Data;
+    using Portfolio.Web.ViewModels.EducationViewModels;
+
     public class EducationController : Controller
     {
-        private readonly ICreateUniversityService _createUniversity;
-        private readonly IDeletableEntityRepository<University> _universityRepository;
+        private readonly IUniversityService createUniversity;
 
-        public EducationController(ICreateUniversityService createUniversity)
+        public EducationController(IUniversityService createUniversity)
         {
-            _createUniversity = createUniversity;
+            this.createUniversity = createUniversity;
         }
 
         public IActionResult Education()
         {
             var viewModel = new AllEducationsViewModel();
-            var model = _createUniversity.GetAll<EducationViewModel>().ToList();
+            var model = this.createUniversity.GetAll<EducationViewModel>().ToList();
             viewModel.EducationViewModels = model;
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
     }
 }

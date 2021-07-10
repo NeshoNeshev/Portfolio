@@ -17,7 +17,15 @@
         [Required]
         [DisplayName("New Project Url")]
         [Url]
-        public string NewProjectUrl{ get; set; }
+        public string NewImgUrl{ get; set; }
+
+        [DisplayName("Enter new site Url")]
+        [Url]
+        public string NewSiteUrl { get; set; }
+
+        [Required]
+        [DisplayName("Enter Content")]
+        public string NewContent { get; set; }
 
         public ICollection<ProjectDropDownViewModel> ProjectDropDown { get; set; }
     }

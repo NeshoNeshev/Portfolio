@@ -7,15 +7,15 @@
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
 
-    public class CreateCountryService : ICreateCountryService
+    public class CountryService : ICountryService
     {
         private readonly IDeletableEntityRepository<Country> countryRepository;
         private readonly IDeletableEntityRepository<Town> townRepository;
-        private readonly ICreateTownService createTownService;
+        private readonly ITownService createTownService;
 
-        public CreateCountryService(IDeletableEntityRepository<Country> countryRepository,
+        public CountryService(IDeletableEntityRepository<Country> countryRepository,
             IDeletableEntityRepository<Town> townRepository
-            ,ICreateTownService createTownService)
+            ,ITownService createTownService)
         {
             this.countryRepository = countryRepository;
             this.townRepository = townRepository;

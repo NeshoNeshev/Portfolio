@@ -10,7 +10,7 @@
 
     using Microsoft.Extensions.Configuration;
 
-    public class GoogleRecapchaValidationattribute : ValidationAttribute
+    public class GoogleRecaptchaValidationAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

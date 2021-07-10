@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Web.Areas.Administration.Views.Organization;
-using Portfolio.Web.ViewModels.Administration.Organization;
-
-namespace Portfolio.Services.Data
+﻿namespace Portfolio.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -10,50 +6,34 @@ namespace Portfolio.Services.Data
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
     using Portfolio.Services.Mapping;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
+    using Portfolio.Web.ViewModels.Administration.Organization;
 
-    public class CreateOrganizationServices : ICreateOrganizationServices
+    public class OrganizationServices : IOrganizationServices
     {
         private readonly IDeletableEntityRepository<PrivateInformation> privateInformationRepository;
-        private readonly IDeletableEntityRepository<Position> positionRepository;
         private readonly IDeletableEntityRepository<Organization> organizationRepository;
         private readonly IDeletableEntityRepository<Country> countryRepository;
-        private readonly IDeletableEntityRepository<Sector> sectorRepository;
-        private readonly ICreateCountryService createCountryService;
-        private readonly ICreateTownService townService;
-        private readonly ICreateSectorService sectorService;
-        private readonly ICreatePositionService createPosition;
-        private readonly IChangeInputToUpper<OrganizationInputModel> changeInputToUpper;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICountryService createCountryService;
+        private readonly ITownService townService;
 
-        public CreateOrganizationServices(
+        public OrganizationServices(
             IDeletableEntityRepository<PrivateInformation> privateInformationRepository,
-            IDeletableEntityRepository<Position> positionRepository,
             IDeletableEntityRepository<Organization> organizationRepository,
             IDeletableEntityRepository<Country> countryRepository,
-            IDeletableEntityRepository<Sector> sectorRepository,
-            ICreateCountryService createCountryService,
-            ICreateTownService townService,
-            ICreateSectorService sectorService,
-            ICreatePositionService createPosition,
-            IChangeInputToUpper<OrganizationInputModel> changeInputToUpper,
-            UserManager<ApplicationUser> userManager
-        )
+            ICountryService createCountryService,
+            ITownService townService,
+            IChangeInputToUpper<OrganizationInputModel> changeInputToUpper)
         {
             this.privateInformationRepository = privateInformationRepository;
-            this.positionRepository = positionRepository;
             this.organizationRepository = organizationRepository;
             this.countryRepository = countryRepository;
-            this.sectorRepository = sectorRepository;
             this.createCountryService = createCountryService;
             this.townService = townService;
-            this.sectorService = sectorService;
-            this.createPosition = createPosition;
-            this.changeInputToUpper = changeInputToUpper;
-            this._userManager = userManager;
         }
 
         public async Task CreateAsync(OrganizationInputModel input)

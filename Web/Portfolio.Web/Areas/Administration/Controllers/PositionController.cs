@@ -14,12 +14,12 @@
     [Area("Administration")]
     public class PositionController : AdministrationController
     {
-        private readonly ICreateSectorService sectorService;
-        private readonly ICreatePositionService positionService;
+        private readonly ISectorService sectorService;
+        private readonly IPositionService positionService;
         private readonly IEnumerable<SectorDropDownViewModel> sectorDropDown;
         private readonly IEnumerable<PositionDropDownViewModel> positionDropDown;
 
-        public PositionController(ICreateSectorService sectorService, ICreatePositionService positionService)
+        public PositionController(ISectorService sectorService, IPositionService positionService)
         {
             this.sectorService = sectorService;
             this.positionService = positionService;

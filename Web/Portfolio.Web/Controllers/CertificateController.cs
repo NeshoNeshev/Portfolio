@@ -1,27 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Portfolio.Services.Data;
-using Portfolio.Web.ViewModels.CertificateViewModels;
-
-namespace Portfolio.Web.Controllers
+﻿namespace Portfolio.Web.Controllers
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Portfolio.Services.Data;
+    using Portfolio.Web.ViewModels.CertificateViewModels;
+
     public class CertificateController : Controller
     {
-        private readonly ICreateCertificatesService _certificatesService;
+        private readonly ICertificatesService certificateService;
 
-        public CertificateController(ICreateCertificatesService certificatesService)
+        public CertificateController(ICertificatesService certificatesService)
         {
-            _certificatesService = certificatesService;
+            this.certificateService = certificatesService;
         }
+
         public IActionResult Certificate()
         {
             var viewModel = new CertificateModel();
-            var model = this._certificatesService.GetAll<CertificateViewModel>().ToList();
+            var model = this.certificateService.GetAll<CertificateViewModel>().ToList();
             viewModel.Certificates = model;
-            return View(viewModel);
+            return this.View(viewModel);
         }
     }
 }

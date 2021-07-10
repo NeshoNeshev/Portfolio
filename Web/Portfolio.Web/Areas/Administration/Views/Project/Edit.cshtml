@@ -9,7 +9,7 @@
 
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-    <form method="post" asp-action="Edit">
+    <form method="post" enctype="multipart/form-data" asp-action="Edit">
         <section class="border border-primary">
             <div class="container">
                 <div class="row" style="margin-bottom: 20px">
@@ -25,13 +25,21 @@
                     </div>
                     <div class="col-md-2">
                         <label asp-for="NewProjectName" class="text-primary"></label>
-                        <input asp-for="NewProjectName" class="form-control" placeholder="Enter new name"/>
+                        <input asp-for="NewProjectName" class="form-control" placeholder="Enter new name" />
                         <span asp-validation-for="NewProjectName" class="text-danger"></span>
                     </div>
                     <div class="col-md-2">
-                        <label asp-for="NewProjectUrl" class="text-primary"></label>
-                        <input asp-for="NewProjectUrl" class="form-control" placeholder="Enter new Url"/>
-                        <span asp-validation-for="NewProjectUrl" class="text-danger"></span>
+                        <label asp-for="NewSiteUrl" class="text-primary"></label>
+                        <input asp-for="NewSiteUrl" class="form-control" placeholder="Enter new name" />
+                        <span asp-validation-for="NewSiteUrl" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="NewContent" class="text-primary"></label>
+                        <input asp-for="NewContent" class="form-control" placeholder="Enter new name" />
+                        <span asp-validation-for="NewContent" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="file" name="file" multiple="" />
                     </div>
                 </div>
             </div>

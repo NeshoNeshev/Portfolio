@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface ICreateTownService
+    public interface ITownService
     {
         Task CreateAsync(string townName, string countryName);
     }
