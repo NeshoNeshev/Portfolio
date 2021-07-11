@@ -1,4 +1,4 @@
-﻿namespace Portfolio.Web.Areas.Administration.Views.Organization
+﻿namespace Portfolio.Web.ViewModels.Administration.Organization
 {
     using Portfolio.Services.Mapping;
 

@@ -70,7 +70,7 @@
             }
 
             await this.projectService.CreateAsync(model);
-            return this.View(model);
+            return this.RedirectToAction("AllProjects");
         }
 
         [HttpGet]
@@ -90,7 +90,16 @@
 
             await this.projectService.UpdateAsync(model);
 
-            return this.Json("Sucsess");
+            return this.RedirectToAction("AllProjects");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllProjects()
+        {
+            var model = this.projectService.GetAll<ProjectViewModel>();
+            var viewModel = new AllProjectViewModel() { ProjectViewModels = model };
+            return this.View(viewModel);
         }
     }
 }

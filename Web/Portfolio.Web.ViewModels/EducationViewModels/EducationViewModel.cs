@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Portfolio.Data.Models;
-using Portfolio.Services.Mapping;
-
-namespace Portfolio.Web.ViewModels.EducationViewModels
+﻿namespace Portfolio.Web.ViewModels.EducationViewModels
 {
+    using System.Collections.Generic;
+
+    using Portfolio.Data.Models;
+    using Portfolio.Services.Mapping;
+
     public class EducationViewModel : IMapFrom<University>
     {
         public string UniversityName { get; set; }

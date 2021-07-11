@@ -8,7 +8,7 @@
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
     using Portfolio.Services.Mapping;
-    using Portfolio.Web.ViewModels.Administration.Speciality;
+    using Portfolio.Web.ViewModels.Administration.Specialty;
 
     public class SpecialtiesService : ISpecialtiesService
     {
@@ -61,7 +61,7 @@
             .All()
              .Any(s => s.Id == id);
 
-        public async Task UpdateAsync(EditSpecialityInputModel model)
+        public async Task UpdateAsync(EditSpecialtyInputModel model)
         {
             var specialty = this.specialtyRepository
                     .All()

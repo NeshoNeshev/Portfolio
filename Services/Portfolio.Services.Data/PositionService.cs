@@ -43,6 +43,7 @@
                 Id = Guid.NewGuid().ToString(),
                 PositionName = model.PositionName,
                 MoreInformation = model.MoreInformation,
+                Period = model.PositionPeriod,
                 Sector = sector,
             };
             await this.positionRepository.AddAsync(position);

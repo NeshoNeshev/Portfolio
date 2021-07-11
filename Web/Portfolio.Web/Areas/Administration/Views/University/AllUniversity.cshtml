@@ -1,0 +1,31 @@
+﻿@model Portfolio.Web.ViewModels.Administration.University.AllUniversityViewModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Specialty";
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Number</th>
+            <th scope="col">University Name</th>
+            <th scope="col">Period</th>
+            <th scope="col">Country</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UniversityViewModels)
+        {
+            number++;
+
+            <tr>
+                <th scope="row"> @number</th>
+                <td>@item.UniversityName</td>
+                <td>@item.Period</td>
+                <th scope="row"> @item.CountryCountryName</th>
+                <th scope="row"> @item.PrivateInformationFirstName</th>
+            </tr>
+        }
+    </tbody>
+</table>

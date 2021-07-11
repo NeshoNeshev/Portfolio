@@ -1,0 +1,35 @@
+﻿@model Portfolio.Web.ViewModels.Administration.Project.AllProjectViewModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Projects";
+}
+
+<table class="table table-bordered">
+
+    public string PrivateInformationFirstName { get; set; }
+    <thead>
+        <tr>
+            <th scope="col">Project Name</th>
+            <th scope="col">Number</th>
+            <th scope="col">Img Url</th>
+            <th scope="col">Site Url</th>
+            <th scope="col">Content</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in Model.ProjectViewModels)
+        {
+            number++;
+
+            <tr>
+                <th scope="row"> @project.ProjectName</th>
+                <th scope="row"> @number</th>
+                <td>@project.ImgUrl</td>
+                <td>@project.SiteUrl</td>
+                <td>@project.Content</td>
+                <td>@project.PrivateInformationFirstName</td>
+            </tr>
+        }
+    </tbody>
+</table>

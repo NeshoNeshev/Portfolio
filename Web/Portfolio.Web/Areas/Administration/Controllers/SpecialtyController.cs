@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Portfolio.Common;
     using Portfolio.Services.Data;
-    using Portfolio.Web.ViewModels.Administration.Speciality;
+    using Portfolio.Web.ViewModels.Administration.Specialty;
     using Portfolio.Web.ViewModels.Administration.University;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -18,13 +18,13 @@
         private readonly IUniversityService universityService;
         private readonly ISpecialtiesService createSpecialtiesService;
         private readonly IEnumerable<UniversityDropDownViewModel> universityDropDown;
-        private readonly IEnumerable<SpecialityDropDown> specialityDropDowns;
+        private readonly IEnumerable<SpecialtyDropDown> specialityDropDowns;
 
         public SpecialtyController(IUniversityService universityService, ISpecialtiesService createSpecialtiesService)
         {
             this.universityService = universityService;
             this.createSpecialtiesService = createSpecialtiesService;
-            this.specialityDropDowns = this.createSpecialtiesService.GetAll<SpecialityDropDown>();
+            this.specialityDropDowns = this.createSpecialtiesService.GetAll<SpecialtyDropDown>();
             this.universityDropDown = this.universityService.GetAll<UniversityDropDownViewModel>();
         }
 
@@ -52,26 +52,38 @@
 
             await this.createSpecialtiesService.CreateAsync(model);
 
-            return this.Json("sadasda");
+            return this.RedirectToAction("AllSpecialty");
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Edit() => this.View(new EditSpecialityInputModel{SpecialityDropDowns = this.specialityDropDowns.ToList() });
+        public IActionResult Edit() => this.View(new EditSpecialtyInputModel{SpecialtyDropDowns = this.specialityDropDowns.ToList() });
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(EditSpecialityInputModel model)
+        public async Task<IActionResult> Edit(EditSpecialtyInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                model.SpecialityDropDowns = this.specialityDropDowns.ToList();
+                model.SpecialtyDropDowns = this.specialityDropDowns.ToList();
                 return this.View(model);
             }
 
             await this.createSpecialtiesService.UpdateAsync(model);
 
-            return this.Json("sadasda");
+            return this.RedirectToAction("AllSpecialty");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllSpecialty()
+        {
+            var model = this.createSpecialtiesService.GetAll<SpecialtyViewModel>();
+            var viewModel = new AllSpecialtyViewModel()
+            {
+                SpecialtyViewModels = model,
+            };
+            return this.View(viewModel);
         }
     }
 }

@@ -56,7 +56,7 @@
             }
 
             await this.universityService.CreateAsync(model);
-            return this.View(model);
+            return this.RedirectToAction("AllUniversity");
         }
 
         [HttpGet]
@@ -75,7 +75,19 @@
 
             await this.universityService.UpdateAsync(model);
 
-            return this.Json("Sucsess");
+            return this.RedirectToAction("AllUniversity");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllUniversity()
+        {
+            var model = this.universityService.GetAll<UniversityViewModel>();
+            var viewModel = new AllUniversityViewModel()
+            {
+                UniversityViewModels = model,
+            };
+            return this.View(viewModel);
         }
     }
 }

@@ -10,9 +10,9 @@
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
     using Portfolio.Services.Data;
-    using Portfolio.Web.Areas.Administration.Views.Organization;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
     using Portfolio.Web.ViewModels.Administration.Organization;
+    using Portfolio.Web.ViewModels.OrganizationViewModels;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     [Area("Administration")]
@@ -41,8 +41,7 @@
         [Authorize]
         public async Task<IActionResult> CreateOrganization(OrganizationInputModel input)
         {
-            var organizationName = this.organizationRepository.All()
-                .Any(x => x.OrganizationName == input.OrganizationName);
+            var organizationName = this.organizationServices.FindByNameAsync(input.OrganizationName);
             var privateName = this.privateInformation.All().Any(x => x.FirstName == input.PrivateName);
             if (organizationName)
             {
@@ -66,7 +65,7 @@
             }
 
             await this.organizationServices.CreateAsync(input);
-            return this.View(input);
+            return this.RedirectToAction("AllOrganization");
         }
 
         [HttpGet]
@@ -77,6 +76,16 @@
         [Authorize]
         public async Task<IActionResult> Edit(EditOrganizationInputModel model)
         {
+            var organizationName = this.organizationServices.FindByIdAsync(model.NewOrganizationName);
+            if (organizationName)
+            {
+                model.OrganizaztionDropDown = this.organizationDropDown.ToList();
+                this.ModelState.AddModelError(
+                    nameof(EditOrganizationInputModel.NewOrganizationName),
+                    $"Exist {model.NewOrganizationName}");
+                return this.View(model);
+            }
+
             if (!this.ModelState.IsValid)
             {
                 model.OrganizaztionDropDown = this.organizationDropDown.ToList();
@@ -85,7 +94,16 @@
 
             await this.organizationServices.UpdateAsync(model);
 
-            return this.Json("Sucsess");
+            return this.RedirectToAction("AllOrganization");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllOrganization()
+        {
+            var model = this.organizationServices.GetAll<OrganizationViewModel>();
+            var viewModel = new AllOrganizationViewModel() { OrganizationViewModels = model };
+            return this.View(viewModel);
         }
     }
 }

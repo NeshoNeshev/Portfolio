@@ -1,0 +1,32 @@
+﻿@model Portfolio.Web.ViewModels.OrganizationViewModels.AllOrganizationViewModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Organization";
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">PrivateInformation FirstName</th>
+            <th scope="col">Number</th>
+            <th scope="col">Country Name</th>
+            <th scope="col">Organization Name</th>
+            <th scope="col">Company Size</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var organization in Model.OrganizationViewModels)
+        {
+            number++;
+
+            <tr>
+                <th scope="row"> @organization.PrivateInformationFirstName</th>
+                <th scope="row"> @number</th>
+                <td>@organization.CountryCountryName</td>
+                <td>@organization.OrganizationName</td>
+                <td>@organization.CompanySize</td>
+            </tr>
+        }
+    </tbody>
+</table>

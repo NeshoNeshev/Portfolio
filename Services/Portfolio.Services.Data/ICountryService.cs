@@ -5,5 +5,7 @@
     public interface ICountryService
     {
         Task CreateAsync(string countryName, string townName);
+
+        public bool FindByNameAsync(string name);
     }
 }

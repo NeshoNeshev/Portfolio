@@ -5,7 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using Portfolio.Services.Mapping;
-    using Portfolio.Web.ViewModels.Administration.Speciality;
+    using Portfolio.Web.ViewModels.Administration.Specialty;
 
     public class CourseInputModel : IMapFrom<Data.Models.Course>
     {
@@ -23,9 +23,9 @@
         public string Date { get; set; }
 
         [Required]
-        [DisplayName("Speciality")]
-        public string SpecialityId { get; set; }
+        [DisplayName("Specialty")]
+        public string SpecialtyId { get; set; }
 
-        public ICollection<SpecialityDropDown> SpecialtiesDropDowns { get; set; }
+        public ICollection<SpecialtyDropDown> SpecialtiesDropDowns { get; set; }
     }
 }

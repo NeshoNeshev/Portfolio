@@ -1,4 +1,4 @@
-﻿namespace Portfolio.Web.ViewModels.Administration.Speciality
+﻿namespace Portfolio.Web.ViewModels.Administration.Specialty
 {
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -7,7 +7,7 @@
     using Portfolio.Data.Models;
     using Portfolio.Services.Mapping;
 
-    public class EditSpecialityInputModel : IMapFrom<Specialty>
+    public class EditSpecialtyInputModel : IMapFrom<Specialty>
     {
         [DisplayName("Specialty")]
         public string Id { get; set; }
@@ -22,6 +22,6 @@
         [DisplayName("NewDegree")]
         public string NewDegree { get; set; }
 
-        public ICollection<SpecialityDropDown> SpecialityDropDowns { get; set; }
+        public ICollection<SpecialtyDropDown> SpecialtyDropDowns { get; set; }
     }
 }

@@ -1,42 +1,27 @@
-﻿@using Portfolio.Common
-@model Portfolio.Web.ViewModels.Administration.SectorViewModels.AllSectorsViewModel
+﻿@model Portfolio.Web.ViewModels.Administration.SectorViewModels.AllSectorsViewModel
 @{
+    var number = 0;
+    this.ViewData["Title"] = "All Sectors";
 }
-<section id="about" class="about">
-    <div class="container" data-aos="fade-up">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Sector Name</th>
+            <th scope="col">Organization Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in Model.Sector)
+        {
+            number++;
 
-        <div class="section-title">
-            <h2 id="demo" class="headertekst">About Me</h2>
-            <a href="@GlobalConstants.Facebook" target="_blank"><i class="bx bxl-facebook" style="font-size: 1.5em;"></i></a>
-            <a href="@GlobalConstants.Github" target="_blank"><i class="bx bxl-github" style="font-size: 1.5em;"></i></a>
-            <a href="@GlobalConstants.LinkedIn" target="_blank"><i class="bx bxl-linkedin" style="font-size: 1.5em;"></i></a>
-        </div>
+            <tr>
+                <th scope="row"> @number</th>
+                <td>@project.SectorName</td>
+                <th scope="row"> @project.OrganizationOrganizationName</th>
 
-        <div class="row">
-            @foreach (var item in Model.Sector)
-            {
-<div class="col-lg-4">
-    <img src="/images/bg_2.png" class="img-fluid" alt="">
-</div>
-                <div class="col-lg-8 pt-4 pt-lg-0 content">
-                    <p>If you have a problem that can be solved with regular expression, you already have two problems.</p>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul>
-                                <li> <strong>FirstName:</strong> <span>@item.SectorName</span></li>
-                                @foreach (var position in item.Positions)
-                                {
-                                    <li> <strong>FirstName:</strong> <span>@position.PositionName</span></li>
-                                    <li> <strong>FirstName:</strong> <span>@position.MoreInformation</span></li>
-                                    <li> <strong>FirstName:</strong> <span>@position.Period</span></li>
-                                }
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div>
-    </div>
-</section>
+            </tr>
+        }
+    </tbody>
+</table>

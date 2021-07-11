@@ -50,20 +50,21 @@
                 return;
             }
 
-            var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == input.CountryName);
-            if (country == null)
+            var existCountry = this.createCountryService.FindByNameAsync(input.CountryName);
+            if (!existCountry)
             {
                 await this.createCountryService.CreateAsync(input.CountryName, input.TownName);
             }
             else
             {
-                var exist = country.Towns.Any(x => x.TownName == input.TownName);
+                var exist = countryRepository.All().Any(x => x.Towns.Any(x => x.TownName == input.TownName));
                 if (!exist)
                 {
                     await this.townService.CreateAsync(input.TownName, input.CountryName);
                 }
             }
 
+            var country = this.countryRepository.All().FirstOrDefault(x => x.CountryName == input.CountryName);
             var organization = new Organization
             {
                 Id = Guid.NewGuid().ToString(),
@@ -92,7 +93,7 @@
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<Organization> query = this.organizationRepository.All().OrderBy(x => x.OrganizationName).Include(x=>x.Sectors).ThenInclude(x=>x.Positions);
+            IQueryable<Organization> query = this.organizationRepository.All().OrderBy(x => x.OrganizationName).Include(x => x.Sectors).ThenInclude(x => x.Positions);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);

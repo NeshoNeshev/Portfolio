@@ -52,5 +52,10 @@
             await this.countryRepository.AddAsync(country);
             await this.countryRepository.SaveChangesAsync();
         }
+
+        public bool FindByNameAsync(string name)
+            => this.countryRepository
+                .All()
+                .Any(s => s.CountryName == name);
     }
 }

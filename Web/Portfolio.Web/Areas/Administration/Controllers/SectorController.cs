@@ -1,6 +1,4 @@
-﻿using Portfolio.Common;
-
-namespace Portfolio.Web.Areas.Administration.Controllers
+﻿namespace Portfolio.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,13 +6,13 @@ namespace Portfolio.Web.Areas.Administration.Controllers
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Portfolio.Common;
     using Portfolio.Data.Common.Repositories;
     using Portfolio.Data.Models;
     using Portfolio.Services.Data;
     using Portfolio.Services.Mapping;
-    using Portfolio.Web.Areas.Administration.Views.Organization;
     using Portfolio.Web.ViewModels.Administration.Dashboard;
-    using Portfolio.Web.ViewModels.Administration.PositionViewModel;
+    using Portfolio.Web.ViewModels.Administration.Organization;
     using Portfolio.Web.ViewModels.Administration.SectorViewModels;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -23,27 +21,15 @@ namespace Portfolio.Web.Areas.Administration.Controllers
     {
         private readonly ISectorService createSector;
         private readonly IOrganizationServices organizationServices;
-        private readonly IPositionService positionService;
-        private readonly IDeletableEntityRepository<Sector> sectoRepository;
         private readonly IEnumerable<SectorDropDownViewModel> sectorDropDown;
         private readonly IEnumerable<OrganizationDropDownViewModel> organizationDropDown;
 
-        public SectorController(ISectorService createSector, IOrganizationServices organizationServices, IPositionService positionService, IDeletableEntityRepository<Sector> sectoRepository)
+        public SectorController(ISectorService createSector, IOrganizationServices organizationServices)
         {
             this.createSector = createSector;
             this.organizationServices = organizationServices;
-            this.positionService = positionService;
-            this.sectoRepository = sectoRepository;
             this.sectorDropDown = this.createSector.GetAll<SectorDropDownViewModel>();
             this.organizationDropDown = this.organizationServices.GetAll<OrganizationDropDownViewModel>();
-        }
-
-        public IActionResult AllSectors()
-        {
-            var viewModel = new AllSectorsViewModel();
-            var model = this.sectoRepository.All().To<SectorViewModel>().ToList();
-            viewModel.Sector = model;
-            return this.View(viewModel);
         }
 
         [HttpGet]
@@ -90,6 +76,18 @@ namespace Portfolio.Web.Areas.Administration.Controllers
             await this.createSector.UpdateAsync(model);
 
             return this.RedirectToAction("AllSectors");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllSectors()
+        {
+            var model = this.createSector.GetAll<SectorViewModel>();
+            var viewModel = new AllSectorsViewModel
+            {
+                Sector = model,
+            };
+            return this.View(viewModel);
         }
     }
 }

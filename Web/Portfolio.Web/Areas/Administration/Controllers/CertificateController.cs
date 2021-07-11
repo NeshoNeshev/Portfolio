@@ -68,7 +68,7 @@
             if (certificateName)
             {
                 model.CertificateDropDowns = this.certificateDropDowns.ToList();
-                this.ModelState.AddModelError(nameof(CertificateInputModel.CertificateName), $"Exist {model.NewCertificateName}");
+                this.ModelState.AddModelError(nameof(EditCertificateInputModel.NewCertificateName), $"Exist {model.NewCertificateName}");
                 return this.View(model);
             }
 

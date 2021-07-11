@@ -1,0 +1,31 @@
+﻿@model Portfolio.Web.ViewModels.Administration.PositionViewModel.AllPositionViewModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Position";
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">SectorName</th>
+            <th scope="col">Number</th>
+            <th scope="col">PositionName</th>
+            <th scope="col">Period</th>
+            <th scope="col">More Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var position in Model.PositionViewModels)
+        {
+            number++;
+
+            <tr>
+                <th scope="row"> @position.SectorSectorName</th>
+                <th scope="row"> @number</th>
+                <td>@position.PositionName</td>
+                <td>@position.Period</td>
+                <td><textarea>@position.MoreInformation</textarea></td>
+            </tr>
+        }
+    </tbody>
+</table>

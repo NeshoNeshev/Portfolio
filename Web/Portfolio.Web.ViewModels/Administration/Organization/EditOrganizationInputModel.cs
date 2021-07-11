@@ -5,9 +5,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using Portfolio.Services.Mapping;
-    using Portfolio.Web.Areas.Administration.Views.Organization;
 
-    public class EditOrganizationInputModel: IMapFrom<Data.Models.Organization>
+    public class EditOrganizationInputModel : IMapFrom<Data.Models.Organization>
     {
         [DisplayName("Organization")]
         public string Id { get; set; }

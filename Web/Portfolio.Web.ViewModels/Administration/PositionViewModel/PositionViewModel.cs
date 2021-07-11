@@ -10,5 +10,7 @@
         public string MoreInformation { get; set; }
 
         public string Period { get; set; }
+
+        public string SectorSectorName { get; set; }
     }
 }

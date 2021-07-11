@@ -4,7 +4,6 @@
 
     public class OrganizationInputModel
     {
-
         [Required]
         [Display(Name = "Company Name")]
         public string OrganizationName { get; set; }

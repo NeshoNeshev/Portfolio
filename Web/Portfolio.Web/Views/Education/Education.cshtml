@@ -25,7 +25,6 @@
             <h3 id="subject" class="education-title">Subjects Studied</h3>
             foreach (var speciality in item.Specialties)
             {
-                <p class="h5"><em>@speciality.SpecialtyName.</em></p>
                 foreach (var course in speciality.Courses)
                 {
                     <div class="row">
@@ -76,7 +75,6 @@
                         }
                     </div>
                 }
-
             }
         }
     </div>

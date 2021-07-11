@@ -1,7 +1,7 @@
-﻿@model Portfolio.Web.ViewModels.Administration.Speciality.EditSpecialityInputModel
+﻿@model Portfolio.Web.ViewModels.Administration.Specialty.EditSpecialtyInputModel
 
 @{
-    this.ViewData["Title"] = "Edit Speciality";
+    this.ViewData["Title"] = "Edit Specialty";
 }
 
 <div class="text-center">
@@ -15,7 +15,7 @@
                 <div class="col-md-4">
                     <label asp-for="Id" class="text-primary"></label>
                     <select asp-for="Id" class="form-control">
-                        @foreach (var item in Model.SpecialityDropDowns)
+                        @foreach (var item in Model.SpecialtyDropDowns)
                         {
                             <option value="@item.Id">@item.SpecialtyName</option>
                         }

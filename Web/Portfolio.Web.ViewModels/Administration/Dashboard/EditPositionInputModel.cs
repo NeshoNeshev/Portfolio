@@ -4,9 +4,8 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    public class EditPositionInputModel 
+    public class EditPositionInputModel
     {
-
         [Required]
         [DisplayName("Positions")]
         public string Id { get; set; }

@@ -25,7 +25,7 @@
         public async Task CreateAsync(CourseInputModel model)
         {
 
-            var specialty = this.specialityRepository.All().FirstOrDefault(x => x.Id == model.SpecialityId);
+            var specialty = this.specialityRepository.All().FirstOrDefault(x => x.Id == model.SpecialtyId);
             if (specialty == null)
             {
                 return;

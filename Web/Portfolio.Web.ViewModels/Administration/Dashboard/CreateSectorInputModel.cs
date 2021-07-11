@@ -6,7 +6,7 @@
 
     using Portfolio.Data.Models;
     using Portfolio.Services.Mapping;
-    using Portfolio.Web.Areas.Administration.Views.Organization;
+    using Portfolio.Web.ViewModels.Administration.Organization;
 
     public class CreateSectorInputModel : IMapFrom<Sector>
     {

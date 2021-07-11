@@ -1,4 +1,4 @@
-﻿namespace Portfolio.Web.ViewModels.Administration.Speciality
+﻿namespace Portfolio.Web.ViewModels.Administration.Specialty
 {
     using System.Collections.Generic;
     using System.ComponentModel;

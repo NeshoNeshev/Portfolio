@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Web.Areas.Administration.Controllers
+﻿using Portfolio.Web.ViewModels.Administration.PositionViewModel;
+
+namespace Portfolio.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -51,7 +53,7 @@
 
             await this.positionService.CreateAsync(positionModel);
 
-            return this.Json("sasa: as");
+            return this.RedirectToAction("AllPosition");
         }
 
         [HttpGet]
@@ -70,7 +72,16 @@
 
             await this.positionService.UpdateAsync(model);
 
-            return this.View();
+            return this.RedirectToAction("AllPosition");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllPosition()
+        {
+            var model = this.positionService.GetAll<PositionViewModel>();
+            var viewModel = new AllPositionViewModel() { PositionViewModels = model };
+            return this.View(viewModel);
         }
     }
 }

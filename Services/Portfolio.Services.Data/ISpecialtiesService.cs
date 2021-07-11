@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Portfolio.Web.ViewModels.Administration.Speciality;
+    using Portfolio.Web.ViewModels.Administration.Specialty;
 
     public interface ISpecialtiesService
     {
@@ -15,6 +15,6 @@
 
         public bool FindByIdAsync(string id);
 
-        public Task UpdateAsync(EditSpecialityInputModel model);
+        public Task UpdateAsync(EditSpecialtyInputModel model);
     }
 }
