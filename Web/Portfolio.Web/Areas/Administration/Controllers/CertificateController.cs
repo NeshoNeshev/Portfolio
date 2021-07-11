@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using Portfolio.Common;
-
-namespace Portfolio.Web.Areas.Administration.Controllers
+﻿namespace Portfolio.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Portfolio.Common;
     using Portfolio.Services.Data;
     using Portfolio.Web.ViewModels.Administration.Certificate;
     using Portfolio.Web.ViewModels.Administration.Course;
+    using Portfolio.Web.ViewModels.CertificateViewModels;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     [Area("Administration")]
@@ -37,7 +37,7 @@ namespace Portfolio.Web.Areas.Administration.Controllers
         [Authorize]
         public async Task<IActionResult> CreateCertificate(CertificateInputModel model)
         {
-            var certificateName = this.courseService.FindByNameAsync(model.CertificateName);
+            var certificateName = this.certificatesService.FindByName(model.CertificateName);
             if (certificateName)
             {
                 model.CourseDropDowns = this.courseDropDowns.ToList();
@@ -53,7 +53,7 @@ namespace Portfolio.Web.Areas.Administration.Controllers
 
             await this.certificatesService.CreateAsync(model);
 
-            return this.View(model);
+            return this.RedirectToAction("AllCertificates");
         }
 
         [HttpGet]
@@ -64,6 +64,14 @@ namespace Portfolio.Web.Areas.Administration.Controllers
         [Authorize]
         public async Task<IActionResult> EditCertificate(EditCertificateInputModel model)
         {
+            var certificateName = this.certificatesService.FindByName(model.NewCertificateName);
+            if (certificateName)
+            {
+                model.CertificateDropDowns = this.certificateDropDowns.ToList();
+                this.ModelState.AddModelError(nameof(CertificateInputModel.CertificateName), $"Exist {model.NewCertificateName}");
+                return this.View(model);
+            }
+
             if (!this.ModelState.IsValid)
             {
                 model.CertificateDropDowns = this.certificateDropDowns.ToList();
@@ -72,7 +80,16 @@ namespace Portfolio.Web.Areas.Administration.Controllers
 
             await this.certificatesService.UpdateAsync(model);
 
-            return this.Json("asdsa");
+            return this.RedirectToAction("AllCertificates");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllCertificates()
+        {
+            var model = this.certificatesService.GetAll<CertificateViewModel>();
+            var viewModel = new CertificateModel { Certificates = model };
+            return this.View(viewModel);
         }
     }
 }

@@ -12,10 +12,10 @@
         public IEnumerable<T> GetAll<T>(int? count = null);
 
 
-        public bool FindByNameAsync(string name);
+        public bool FindByName(string name);
 
 
-        public bool FindByIdAsync(string id);
+        public bool FindById(string id);
 
         public Task UpdateAsync(EditCertificateInputModel input);
     }

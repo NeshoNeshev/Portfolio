@@ -30,7 +30,7 @@
         private static async Task SeedUserAsync(UserManager<ApplicationUser> userManager, string username, string password, string email)
         {
             var user = await userManager.FindByNameAsync(username);
-            
+
             if (user == null)
             {
                 var result = await userManager.CreateAsync(

@@ -1,0 +1,34 @@
+﻿@model Portfolio.Web.ViewModels.CertificateViewModels.CertificateModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Certificate";
+}
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th scope="col">Course Name</th>
+            <th scope="col">Number</th>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Link</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var certificate in Model.Certificates)
+    {
+        number++;
+        
+        <tr>
+            <th scope="row"> @certificate.CourseCourseName</th>
+            <th scope="row"> @number</th>
+            <td>@certificate.CertificateName</td>
+            <td>@certificate.Date</td>
+            <td>@certificate.Link</td>
+            <td><textarea style="min-width: 100%;resize:vertical">@certificate.Description </textarea></td>
+        </tr>
+    }
+    </tbody>
+</table>

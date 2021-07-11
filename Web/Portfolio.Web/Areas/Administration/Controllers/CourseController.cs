@@ -10,6 +10,7 @@
     using Portfolio.Services.Data;
     using Portfolio.Web.ViewModels.Administration.Course;
     using Portfolio.Web.ViewModels.Administration.Speciality;
+    using Portfolio.Web.ViewModels.CourseViewModels;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     [Area("Administration")]
@@ -30,7 +31,7 @@
 
         [HttpGet]
         [Authorize]
-        public IActionResult CreateCourse() => View(new CourseInputModel{SpecialtiesDropDowns = this.specialityDropDowns.ToList()});
+        public IActionResult CreateCourse() => this.View(new CourseInputModel{SpecialtiesDropDowns = this.specialityDropDowns.ToList()});
 
         [HttpPost]
         [Authorize]
@@ -51,7 +52,7 @@
             }
 
             await this.courseService.CreateAsync(model);
-            return View(model);
+            return this.View(model);
         }
 
         [HttpGet]
@@ -67,9 +68,19 @@
                 model.CourseDropDowns = this.courseDropDowns.ToList();
                 return this.View(model);
             }
+
             await this.courseService.UpdateAsync(model);
 
             return this.Json("asdsa");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllCourses()
+        {
+            var model = this.courseService.GetAll<CourseViewModel>();
+            var viewModel = new AllCourseViewModel() { CourseViewModels = model };
+            return this.View(viewModel);
         }
     }
 }

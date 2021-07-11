@@ -14,20 +14,35 @@
             <a asp-page="/About" class="btn-get-started">About me</a>
         </div>
         <div class="links">
-            <a href="" target="_blank"><i class="bx bxl-facebook" style="font-size: 1.5em;"></i></a>
-            <a href="" target="_blank"><i class="bx bxl-github" style="font-size: 1.5em;"></i></a>
-            <a href="" target="_blank"><i class="bx bxl-linkedin" style="font-size: 1.5em;"></i></a>
+            <a href="@GlobalConstants.Facebook" target="_blank"><i class="bx bxl-facebook" style="font-size: 1.5em;"></i></a>
+            <a href="@GlobalConstants.Github" target="_blank"><i class="bx bxl-github" style="font-size: 1.5em;"></i></a>
+            <a href="@GlobalConstants.LinkedIn" target="_blank"><i class="bx bxl-linkedin" style="font-size: 1.5em;"></i></a>
         </div>
         <div class="row icon-boxes">
-            @for (int i = 0; i < 4; i++)
-            {
-<div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
-    <div class="icon-box">
-        <h4 class="title"><a asp-page="">Certificate</a></h4>
-        <p class="description">In this section you can see my certificates.</p>
-    </div>
-</div>}
-
+            <div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <h4 class="title"><a asp-controller="Certificate" asp-action="Certificate">Certificate</a></h4>
+                    <p class="description">In this section you can see my certificates.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <h4 class="title"><a asp-controller="Project" asp-action="Project">Projects</a></h4>
+                    <p class="description">In this section you can see my projects.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <h4 class="title"><a asp-controller="ProfessionalExperience" asp-action="ProfessionalExperience">Experience</a></h4>
+                    <p class="description">In this section you can see my ProfessionalExperience.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <h4 class="title"><a asp-controller="Education" asp-action="Education">Education</a></h4>
+                    <p class="description">In this section you can see my Education.</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>

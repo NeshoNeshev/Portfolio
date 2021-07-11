@@ -53,12 +53,12 @@
             return query.To<T>().ToList();
         }
 
-        public bool FindByNameAsync(string name)
+        public bool FindByName(string name)
             => this.certificateRepository
                 .All()
                 .Any(s => s.CertificateName == name);
 
-        public bool FindByIdAsync(string id) => this.certificateRepository
+        public bool FindById(string id) => this.certificateRepository
             .All()
             .Any(x => x.Id == id);
 

@@ -54,7 +54,7 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddDistributedMemoryCache();
-            services.AddSession(options => { options.IdleTimeout=TimeSpan.FromSeconds(10); });
+            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromHours(3); });
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 

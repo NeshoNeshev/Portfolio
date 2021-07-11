@@ -6,8 +6,8 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    using Models;
     using Portfolio.Common;
+    using Portfolio.Data.Models;
 
     public class PrivateInformationSeeder : ISeeder
     {

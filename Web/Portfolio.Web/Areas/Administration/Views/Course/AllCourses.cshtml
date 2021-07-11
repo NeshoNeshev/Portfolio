@@ -1,0 +1,33 @@
+﻿@model Portfolio.Web.ViewModels.CourseViewModels.AllCourseViewModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Courses";
+}
+
+<table class="table table-bordered">
+
+    <thead>
+    <tr>
+        <th scope="col">Course Name</th>
+        <th scope="col">Number</th>
+        <th scope="col">Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Link</th>
+        <th scope="col">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var course in Model.CourseViewModels)
+    {
+        number++;
+        
+        <tr>
+            <th scope="row"> @course.SpecialtySpecialtyName.</th>
+            <th scope="row"> @number</th>
+            <td>@course.CourseName</td>
+            <td>@course.Date</td>
+            <td><textarea style="min-width: 100%;resize:vertical">@course.Description </textarea></td>
+        </tr>
+    }
+    </tbody>
+</table>

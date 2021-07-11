@@ -17,7 +17,7 @@
         [Required]
         [DisplayName("New Project Url")]
         [Url]
-        public string NewImgUrl{ get; set; }
+        public string NewImgUrl { get; set; }
 
         [DisplayName("Enter new site Url")]
         [Url]
